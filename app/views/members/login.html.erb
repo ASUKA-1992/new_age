@@ -1,0 +1,32 @@
+<br/>
+<div class="body_narrow font_15">
+  <div class="div_center">
+    <div class="top">
+      <%= image_tag "logo_normal.png", size: "280x100", alt: "タイトル" %>
+    </div>
+    <div class="font_15">会員ログイン</div>
+    <%= form_tag :session, id: "login_form" do %>
+      <% if flash.alert %>
+        <div class="alert"><%= flash.alert %></div><% end %>
+      <table class="inline-block">
+        <tr>
+          <td class="div_bold div_right">メールアドレス</td>
+          <td><input type="text" name="mail"></td>
+        </tr>
+        <tr>
+          <td class="div_bold div_right">パスワード</td>
+          <td><input type="password" name="password"></td>
+        </tr>
+      </table>
+      <div>
+          <input type="submit" value="ログイン">
+      </div>
+    <% end %>
+    <br/>
+    <div class="font_12">
+      パスワードをお忘れの方は、以下のメールアドレスにその旨をお伝えください。<br/>
+      管理者側で初期化いたします。<br/>
+      yanagisawa.asuka.kohei@gmail.com
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<% if obj.errors.present? %>
+  <div id="errors">
+      <% obj.errors.full_messages.each do |msg| %>
+        <span class="alert"><%= msg %></span><br/>
+        <% break %>
+      <% end %>
+  </div>
+<% end %>

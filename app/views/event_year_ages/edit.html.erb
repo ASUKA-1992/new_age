@@ -1,0 +1,8 @@
+<div class="body">
+  <div class="div_center">
+    <%= form_for @age_and_genders,:url => {controller: "event_year_ages", action: "update"} do |form| %>
+      <%= render "form", form: form %>
+      <%= form.hidden_field :id, :value => @age_and_genders.id %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,579 @@
+<%= javascript_include_tag "age.js" %>
+<div class="body">
+  <div class="div_center">
+    <div class="div_bold">■居住地別人口増減・移動入力画面■</div><br/>
+    <%= link_to "戻る", @target_event, :class=>'no_border_link' %><br/>
+    <div><span class="div_bold">この年の人口増減を入力してください</span><br/>
+    ※人口増減は棒グラフで表示されます。細かい値は気にせず入力してください
+    <br/>
+    <div class="font_20"><%= @target_event.title %></div>
+    <%= render "shared/errors_flash" %>
+    <%= form_for @prefectures do |form| %>
+      <div>
+        人口増減割合:
+        <select id="calculate_rate">
+          <option value=""></option>
+          <option value=0.05>5%</option>
+          <option value=0.10>10%</option>
+          <option value=0.15>15%</option>
+          <option value=0.20>20%</option>
+          <option value=0.25>25%</option>
+          <option value=0.30>30%</option>
+          <option value=0.35>35%</option>
+          <option value=0.40>40%</option>
+          <option value=0.45>45%</option>
+          <option value=0.50>50%</option>
+          <option value=0.55>55%</option>
+          <option value=0.60>60%</option>
+          <option value=0.65>65%</option>
+          <option value=0.70>70%</option>
+          <option value=0.75>75%</option>
+          <option value=0.80>80%</option>
+          <option value=0.85>85%</option>
+          <option value=0.90>90%</option>
+          <option value=0.95>95%</option>
+          <option value=1.00>100%</option>
+        </select>
+        <input type="button" value="減少" onclick="calculate(true)"/>
+        <input type="button" value="増加" onclick="calculate(false)"/>
+      </div>
+
+      <table id="age_new_table" class="table_main inline-block head_color">
+        <thead>
+          <tr>
+            <th colspan="2">北海道・東北</th>
+            <th colspan="2">関東</th>
+            <th colspan="2">中部</th>
+            <th colspan="2">近畿</th>
+            <th colspan="2">中国・四国</th>
+            <th colspan="2">九州・沖縄</th>
+          </tr>
+        <tbody class="table_body" id="input_table">
+          <tr>
+            <td class="td_w75">北海道</td>
+            <td class="">
+              <%= form.text_field :Hokkaido,  :class=>'age_new_input',:id=>"input_Hokkaido" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Hokkaido">
+            </td>
+            <td class="td_w75">茨城県</td>
+            <td class="">
+              <%= form.text_field :Ibaraki,  :class=>'age_new_input',:id=>"input_Ibaraki" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Ibaraki">
+            </td>
+            <td class="td_w75">新潟県</td>
+            <td class="">
+              <%= form.text_field :Niigata,  :class=>'age_new_input',:id=>"input_Niigata" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Niigata">
+            </td>
+            <td class="td_w75">三重県</td>
+            <td class="">
+              <%= form.text_field :Mie,  :class=>'age_new_input', :id=>"input_Mie" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Mie">
+            </td>
+            <td class="td_w75">鳥取県</td>
+            <td class="">
+              <%= form.text_field :Tottori,  :class=>'age_new_input',:id=>"input_Tottori" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Tottori">
+            </td>
+            <td class="td_w75">福岡県</td>
+            <td class="">
+              <%= form.text_field :Fukuoka,  :class=>'age_new_input',:id=>"input_Fukuoka" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Fukuoka">
+            </td>
+          </tr>
+          <tr>
+            <td class="">青森県</td>
+            <td class="">
+              <%= form.text_field :Aomori,  :class=>'age_new_input',:id=>"input_Aomori" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Aomori">
+            </td>
+            <td class="">栃木県</td>
+            <td class="">
+              <%= form.text_field :Tochigi,  :class=>'age_new_input',:id=>"input_Tochigi" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Tochigi">
+            </td>
+            <td class="">富山県</td>
+            <td class="">
+              <%= form.text_field :Toyama,  :class=>'age_new_input',:id=>"input_Toyama" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Toyama">
+            </td>
+            <td class="">滋賀県</td>
+            <td class="">
+              <%= form.text_field :Shiga,  :class=>'age_new_input',:id=>"input_Shiga" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Shiga">
+            </td>
+            <td class="">島根県</td>
+            <td class="">
+              <%= form.text_field :Shimane,  :class=>'age_new_input',:id=>"input_Shimane" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Shimane">
+            </td>
+            <td class="">佐賀県</td>
+            <td class="">
+              <%= form.text_field :Saga,  :class=>'age_new_input',:id=>"input_Saga" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Saga">
+            </td>
+          </tr>
+          <tr>
+            <td class="">岩手県</td>
+            <td class="">
+              <%= form.text_field :Iwate,  :class=>'age_new_input',:id=>"input_Iwate" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Iwate">
+            </td>
+            <td class="">群馬県</td>
+            <td class="">
+              <%= form.text_field :Gunma,  :class=>'age_new_input',:id=>"input_Gunma" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Gunma">
+            </td>
+            <td class="">石川県</td>
+            <td class="">
+              <%= form.text_field :Ishikawa,  :class=>'age_new_input',:id=>"input_Ishikawa" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Ishikawa">
+            </td>
+            <td class="">京都府</td>
+            <td class="">
+              <%= form.text_field :Kyoto,  :class=>'age_new_input',:id=>"input_Kyoto" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Kyoto">
+            </td>
+            <td class="">岡山県</td>
+            <td class="">
+              <%= form.text_field :Okayama,  :class=>'age_new_input',:id=>"input_Okayama" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Okayama">
+            </td>
+            <td class="">長崎県</td>
+            <td class="">
+              <%= form.text_field :Nagasaki,  :class=>'age_new_input',:id=>"input_Nagasaki" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Nagasaki">
+            </td>
+          </tr>
+          <tr>
+            <td class="">秋田県</td>
+            <td class="">
+              <%= form.text_field :Akita,  :class=>'age_new_input',:id=>"input_Akita" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Akita">
+            </td>
+            <td class="">埼玉県</td>
+            <td class="">
+              <%= form.text_field :Saitama,  :class=>'age_new_input',:id=>"input_Saitama" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Saitama">
+            </td>
+            <td class="">福井県</td>
+            <td class="">
+              <%= form.text_field :Fukui,  :class=>'age_new_input',:id=>"input_Fukui" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Fukui">
+            </td>
+            <td class="">大阪府</td>
+            <td class="">
+              <%= form.text_field :Osaka,  :class=>'age_new_input',:id=>"input_Osaka" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Osaka">
+            </td>
+            <td class="">広島県</td>
+            <td class="">
+              <%= form.text_field :Hiroshima,  :class=>'age_new_input',:id=>"input_Hiroshima" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Hiroshima">
+            </td>
+            <td class="">熊本県</td>
+            <td class="">
+              <%= form.text_field :Kumamoto,  :class=>'age_new_input',:id=>"input_Kumamoto" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Kumamoto">
+            </td>
+          </tr>
+          <tr>
+            <td class="">宮城県</td>
+            <td class="">
+              <%= form.text_field :Miyagi,  :class=>'age_new_input',:id=>"input_Miyagi" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Miyagi">
+            </td>
+            <td class="">千葉県</td>
+            <td class="">
+              <%= form.text_field :Chiba,  :class=>'age_new_input',:id=>"input_Chiba" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Chiba">
+            </td>
+            <td class="">山梨県</td>
+            <td class="">
+              <%= form.text_field :Yamanashi,  :class=>'age_new_input',:id=>"input_Yamanashi" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Yamanashi">
+            </td>
+            <td class="">兵庫県</td>
+            <td class="">
+              <%= form.text_field :Hyogo,  :class=>'age_new_input',:id=>"input_Hyogo" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Hyogo">
+            </td>
+            <td class="">山口県</td>
+            <td class="">
+              <%= form.text_field :Yamaguchi,  :class=>'age_new_input',:id=>"input_Yamaguchi" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Yamaguchi">
+            </td>
+            <td class="">大分県</td>
+            <td class="">
+              <%= form.text_field :Oita,  :class=>'age_new_input',:id=>"input_Oita" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Oita">
+            </td>
+          </tr>
+          <tr>
+            <td class="">山形県</td>
+            <td class="">
+              <%= form.text_field :Yamagata,  :class=>'age_new_input',:id=>"input_Yamagata" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Yamagata">
+            </td>
+            <td class="">東京都</td>
+            <td class="">
+              <%= form.text_field :Tokyo,  :class=>'age_new_input',:id=>"input_Tokyo" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Tokyo">
+            </td>
+            <td class="">長野県</td>
+            <td class="">
+              <%= form.text_field :Nagano,  :class=>'age_new_input',:id=>"input_Nagano" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Nagano">
+            </td>
+            <td class="">奈良県</td>
+            <td class="">
+              <%= form.text_field :Nara,  :class=>'age_new_input',:id=>"input_Nara" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Nara">
+            </td>
+            <td class="">徳島県</td>
+            <td class="">
+              <%= form.text_field :Tokushima,  :class=>'age_new_input',:id=>"input_Tokushima" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Tokushima">
+            </td>
+            <td class="">宮崎県</td>
+            <td class="">
+              <%= form.text_field :Miyazaki,  :class=>'age_new_input',:id=>"input_Miyazaki" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Miyazaki">
+            </td>
+          </tr>
+          <tr>
+            <td class="">福島県</td>
+            <td class="">
+              <%= form.text_field :Fukushima,  :class=>'age_new_input',:id=>"input_Fukushima" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Fukushima">
+            </td>
+            <td class="">神奈川県</td>
+            <td class="">
+              <%= form.text_field :Kanagawa,  :class=>'age_new_input',:id=>"input_Kanagawa" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Kanagawa">
+            </td>
+            <td class="">岐阜県</td>
+            <td class="">
+              <%= form.text_field :Gifu,  :class=>'age_new_input',:id=>"input_Gifu" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Gifu">
+            </td>
+            <td class="">和歌山県</td>
+            <td class="">
+              <%= form.text_field :Wakayama,  :class=>'age_new_input',:id=>"input_Wakayama" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Wakayama">
+            </td>
+            <td class="">香川県</td>
+            <td class="">
+              <%= form.text_field :Kagawa,  :class=>'age_new_input',:id=>"input_Kagawa" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Kagawa">
+            </td>
+            <td class="">鹿児島</td>
+            <td class="">
+              <%= form.text_field :Kagoshima,  :class=>'age_new_input',:id=>"input_Kagoshima" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Kagoshima">
+            </td>
+          </tr>
+          <tr>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="">静岡県</td>
+            <td class="">
+              <%= form.text_field :Shizuoka,  :class=>'age_new_input',:id=>"input_Shizuoka" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Shizuoka">
+            </td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="">愛媛県</td>
+            <td class="">
+              <%= form.text_field :Ehime,  :class=>'age_new_input',:id=>"input_Ehime" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Ehime">
+            </td>
+            <td class="">沖縄県</td>
+            <td class="">
+              <%= form.text_field :Okinawa,  :class=>'age_new_input',:id=>"input_Okinawa" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Okinawa">
+            </td>
+          </tr>
+          <tr>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="">愛知県</td>
+            <td class="">
+              <%= form.text_field :Aichi,  :class=>'age_new_input',:id=>"input_Aichi" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Aichi">
+            </td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="">高知県</td>
+            <td class="">
+              <%= form.text_field :Kochi,  :class=>'age_new_input',:id=>"input_Kochi" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Kochi">
+            </td>
+            <td class="">海外</td>
+            <td class="">
+              <%= form.text_field :Others,  :class=>'age_new_input',:id=>"input_Others" %>
+              <input type="checkbox" name="checkbox" class="cal_checkbox" value="Others">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        総人口増減:
+        <input class="input_readonly right_margin" id="total_population" value=<%= @prefectures.total %> readonly>
+        計:
+        <input class="input_readonly right_margin" id="total" value="" readonly>
+        総人口増減との差:
+        <input class="input_readonly" id="diff" value="" readonly>
+      </div>
+      <div>
+        <%= form.submit value="確定", id: "suibmit_btn" %>
+        <%= form.submit value="確定・総人口増減更新", id: "suibmit_btn_confirm", data: { confirm: "総人口増減を上書きます。よろしいですか?"} %>
+      </div>
+      <%= form.hidden_field :event_id, :value => @prefectures.event_id %>
+      <%= form.hidden_field :total, :value => @prefectures.total %>
+    <% end %>
+
+    <br/>
+    <div><span class="div_bold">前出来事(有効のみ)時点の人口</span>
+    <br/>※該当イベントが無効状態の際は、正しい数値が表示されません</div>
+    <table class="table_main inline-block head_color">
+      <thead>
+        <tr>
+          <th colspan="2">北海道・東北</th>
+          <th colspan="2">関東</th>
+          <th colspan="2">中部</th>
+          <th colspan="2">近畿</th>
+          <th colspan="2">中国・四国</th>
+          <th colspan="2">九州・沖縄</th>
+        </tr>
+        <tbody class="table_body">
+          <tr>
+            <td class="td_w75">北海道</td>
+            <td class="div_right">
+              <input id="before_Hokkaido" class="input_white" value="<%= @before_data["1-Hokkaido"].to_s(:delimited) %>" >
+            </td>
+            <td class="td_w75">茨城県</td>
+            <td class="div_right">
+              <input id="before_Ibaraki" class="input_white" value="<%= @before_data["8-Ibaraki"].to_s(:delimited) %>" >
+            </td>
+            <td class="td_w75">新潟県</td>
+            <td class="div_right">
+              <input id="before_Niigata" class="input_white" value="<%= @before_data["15-Niigata"].to_s(:delimited) %>" >
+            </td>
+            <td class="td_w75">三重県</td>
+            <td class="div_right">
+              <input id="before_Mie" class="input_white" value="<%= @before_data["24-Mie"].to_s(:delimited) %>" >
+            </td>
+            <td class="td_w75">鳥取県</td>
+            <td class="div_right">
+              <input id="before_Tottori" class="input_white" value="<%= @before_data["31-Tottori"].to_s(:delimited) %>" >
+            </td>
+            <td class="td_w75">福岡県</td>
+            <td class="div_right">
+              <input id="before_Fukuoka" class="input_white" value="<%= @before_data["40-Fukuoka"].to_s(:delimited) %>" >
+            </td>
+          </tr>
+          <tr>
+            <td class="">青森県</td>
+            <td class="div_right">
+              <input id="before_Aomori" class="input_white" value="<%= @before_data["2-Aomori"].to_s(:delimited) %>" >
+            </td>
+            <td class="">栃木県</td>
+            <td class="div_right">
+              <input id="before_Tochigi" class="input_white" value="<%= @before_data["9-Tochigi"].to_s(:delimited) %>" >
+            </td>
+            <td class="">富山県</td>
+            <td class="div_right">
+              <input id="before_Toyama" class="input_white" value="<%= @before_data["16-Toyama"].to_s(:delimited) %>" >
+            </td>
+            <td class="">滋賀県</td>
+            <td class="div_right">
+              <input id="before_Shiga" class="input_white" value="<%= @before_data["25-Shiga"].to_s(:delimited) %>" >
+            </td>
+            <td class="">島根県</td>
+            <td class="div_right">
+              <input id="before_Shimane" class="input_white" value="<%= @before_data["32-Shimane"].to_s(:delimited) %>" >
+            </td>
+            <td class="">佐賀県</td>
+            <td class="div_right">
+              <input id="before_Saga" class="input_white" value="<%= @before_data["41-Saga"].to_s(:delimited) %>" >
+            </td>
+          </tr>
+          <tr>
+            <td class="">岩手県</td>
+            <td class="div_right">
+              <input id="before_Iwate" class="input_white" value="<%= @before_data["3-Iwate"].to_s(:delimited) %>" >
+            </td>
+            <td class="">群馬県</td>
+            <td class="div_right">
+              <input id="before_Gunma" class="input_white" value="<%= @before_data["10-Gunma"].to_s(:delimited) %>" >
+            </td>
+            <td class="">石川県</td>
+            <td class="div_right">
+              <input id="before_Ishikawa" class="input_white" value="<%= @before_data["17-Ishikawa"].to_s(:delimited) %>" >
+            </td>
+            <td class="">京都府</td>
+            <td class="div_right">
+              <input id="before_Kyoto" class="input_white" value="<%= @before_data["26-Kyoto"].to_s(:delimited) %>" >
+            </td>
+            <td class="">岡山県</td>
+            <td class="div_right">
+              <input id="before_Okayama" class="input_white" value="<%= @before_data["33-Okayama"].to_s(:delimited) %>" >
+            </td>
+            <td class="">長崎県</td>
+            <td class="div_right">
+              <input id="before_Nagasaki" class="input_white" value="<%= @before_data["42-Nagasaki"].to_s(:delimited) %>" >
+            </td>
+          </tr>
+          <tr>
+            <td class="">秋田県</td>
+            <td class="div_right">
+              <input id="before_Akita" class="input_white" value="<%= @before_data["4-Akita"].to_s(:delimited) %>" >
+            </td>
+            <td class="">埼玉県</td>
+            <td class="div_right">
+              <input id="before_Saitama" class="input_white" value="<%= @before_data["11-Saitama"].to_s(:delimited) %>" >
+            </td>
+            <td class="">福井県</td>
+            <td class="div_right">
+              <input id="before_Fukui" class="input_white" value="<%= @before_data["18-Fukui"].to_s(:delimited) %>" >
+            </td>
+            <td class="">大阪府</td>
+            <td class="div_right">
+              <input id="before_Osaka" class="input_white" value="<%= @before_data["27-Osaka"].to_s(:delimited) %>" >
+            </td>
+            <td class="">広島県</td>
+            <td class="div_right">
+              <input id="before_Hiroshima" class="input_white" value="<%= @before_data["34-Hiroshima"].to_s(:delimited) %>" >
+            </td>
+            <td class="">熊本県</td>
+            <td class="div_right">
+              <input id="before_Kumamoto" class="input_white" value="<%= @before_data["43-Kumamoto"].to_s(:delimited) %>" >
+            </td>
+          </tr>
+          <tr>
+            <td class="">宮城県</td>
+            <td class="div_right">
+              <input id="before_Miyagi" class="input_white" value="<%= @before_data["5-Miyagi"].to_s(:delimited) %>" >
+            </td>
+            <td class="">千葉県</td>
+            <td class="div_right">
+              <input id="before_Chiba" class="input_white" value="<%= @before_data["12-Chiba"].to_s(:delimited) %>" >
+            </td>
+            <td class="">山梨県</td>
+            <td class="div_right">
+              <input id="before_Yamanashi" class="input_white" value="<%= @before_data["19-Yamanashi"].to_s(:delimited) %>" >
+            </td>
+            <td class="">兵庫県</td>
+            <td class="div_right">
+              <input id="before_Hyogo" class="input_white" value="<%= @before_data["28-Hyogo"].to_s(:delimited) %>" >
+            </td>
+            <td class="">山口県</td>
+            <td class="div_right">
+              <input id="before_Yamaguchi" class="input_white" value="<%= @before_data["35-Yamaguchi"].to_s(:delimited) %>" >
+            </td>
+            <td class="">大分県</td>
+            <td class="div_right">
+              <input id="before_Oita" class="input_white" value="<%= @before_data["44-Oita"].to_s(:delimited) %>" >
+            </td>
+          </tr>
+          <tr>
+            <td class="">山形県</td>
+            <td class="div_right">
+              <input id="before_Yamagata" class="input_white" value="<%= @before_data["6-Yamagata"].to_s(:delimited) %>" >
+            </td>
+            <td class="">東京都</td>
+            <td class="div_right">
+              <input id="before_Tokyo" class="input_white" value="<%= @before_data["13-Tokyo"].to_s(:delimited) %>" >
+            </td>
+            <td class="">長野県</td>
+            <td class="div_right">
+              <input id="before_Nagano" class="input_white" value="<%= @before_data["20-Nagano"].to_s(:delimited) %>" >
+            </td>
+            <td class="">奈良県</td>
+            <td class="div_right">
+              <input id="before_Nara" class="input_white" value="<%= @before_data["29-Nara"].to_s(:delimited) %>" >
+            </td>
+            <td class="">徳島県</td>
+            <td class="div_right">
+              <input id="before_Tokushima" class="input_white" value="<%= @before_data["36-Tokushima"].to_s(:delimited) %>" >
+            </td>
+            <td class="">宮崎県</td>
+            <td class="div_right">
+              <input id="before_Miyazaki" class="input_white" value="<%= @before_data["45-Miyazaki"].to_s(:delimited) %>" >
+            </td>
+          </tr>
+          <tr>
+            <td class="">福島県</td>
+            <td class="div_right">
+              <input id="before_Fukushima" class="input_white" value="<%= @before_data["7-Fukushima"].to_s(:delimited) %>" >
+            </td>
+            <td class="">神奈川県</td>
+            <td class="div_right">
+              <input id="before_Kanagawa" class="input_white" value="<%= @before_data["14-Kanagawa"].to_s(:delimited) %>" >
+            </td>
+            <td class="">岐阜県</td>
+            <td class="div_right">
+              <input id="before_Gifu" class="input_white" value="<%= @before_data["21-Gifu"].to_s(:delimited) %>" >
+            </td>
+            <td class="">和歌山県</td>
+            <td class="div_right">
+              <input id="before_Wakayama" class="input_white" value="<%= @before_data["30-Wakayama"].to_s(:delimited) %>" >
+            </td>
+            <td class="">香川県</td>
+            <td class="div_right">
+              <input id="before_Kagawa" class="input_white" value="<%= @before_data["37-Kagawa"].to_s(:delimited) %>" >
+            </td>
+            <td class="">鹿児島</td>
+            <td class="div_right">
+              <input id="before_Kagoshima" class="input_white" value="<%= @before_data["46-Kagoshima"].to_s(:delimited) %>" >
+            </td>
+          </tr>
+          <tr>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="">静岡県</td>
+            <td class="div_right">
+              <input id="before_Shizuoka" class="input_white" value="<%= @before_data["22-Shizuoka"].to_s(:delimited) %>" >
+            </td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="">愛媛県</td>
+            <td class="div_right">
+              <input id="before_Ehime" class="input_white" value="<%= @before_data["38-Ehime"].to_s(:delimited) %>" >
+            </td>
+            <td class="">沖縄県</td>
+            <td class="div_right">
+              <input id="before_Okinawa" class="input_white" value="<%= @before_data["47-Okinawa"].to_s(:delimited) %>" >
+            </td>
+          </tr>
+          <tr>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="">愛知県</td>
+            <td class="div_right">
+              <input id="before_Aichi" class="input_white" value="<%= @before_data["23-Aichi"].to_s(:delimited) %>" >
+            </td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="">高知県</td>
+            <td class="div_right">
+              <input id="before_Kochi" class="input_white" value="<%= @before_data["39-Kochi"].to_s(:delimited) %>" >
+            </td>
+            <td class="">海外</td>
+            <td class="div_right">
+              <input id="before_Others" class="input_white" value="<%= @before_data["99-Others"].to_s(:delimited) %>" >
+            </td>
+          </tr>
+        </tbody>
+    </table>
+  </div>
+</div>

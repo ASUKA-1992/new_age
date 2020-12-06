@@ -1,0 +1,376 @@
+body, html{
+  background-color: #061a2b;
+  font-size: 14.5px;
+}
+
+/*トップページのみのapplication.cssの打消し*/
+.body_narrow{
+  width: 100% !important;
+  margin: 0 auto;
+  position: relative;
+  font-size: 13px;
+}
+
+/*レスポンシブ対応 PCで見れないところ*/
+.sp_event{
+  display: none;
+}
+
+/*トップタイトル*/
+.top{
+  text-align: center;
+  margin-top: 10px;
+}
+
+/*メイン*/
+.main{
+  margin: 0 auto;
+  max-width: 1400px;
+  box-sizing: border-box;
+}
+
+.row_first,
+.row_second{
+  display: flex;
+}
+
+/* 各ブロックタイトル */
+.block{
+  margin: 0 5px 10px;
+  color: #fffafa;
+  background-color: #242a3c;
+  border: 1px solid #474f62;
+  position: relative;
+}
+
+/* 各ブロックタイトル*/
+.block_title{
+  font-size: 22px;
+  padding-left: 8px;
+  margin: 10px 0 0 20px;
+  border-left: 4px solid #ff0000;
+}
+
+/*1行目左(地図)*/
+.first_left{
+  width: 40%;
+}
+
+.second_center{
+  width: 30%;
+}
+
+/*1行目右側(出来事)*/
+.first_right{
+  width: 40%;
+  padding: 0 10px;
+}
+
+/*2行目左*/
+.second_left{
+  width: 100%;
+}
+
+/*地図*/
+#map{
+  text-align: center;
+}
+
+/*色解説エリア*/
+.color_description{
+  position: absolute;
+  left: 77%;
+  margin: 2px 5px 10px 0;
+  bottom: 0;
+}
+
+
+/*注釈*/
+#age_glaph_note{
+  float: right;
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  margin-right: 10px;
+  bottom: 5px;
+}
+
+/*性別・年齢別人口単位*/
+#unit_age{
+  float: right;
+  position: absolute;
+  right: 0;
+  margin-right: 10px;
+  top: 30px;
+}
+
+/*イベント日付*/
+.event_date{
+  text-align: center;
+  margin-bottom: 0;
+}
+
+/* 日付・年色開放*/
+.color_year_date{
+  color: #f0f8ff !important;
+}
+/* 日付・年色デフォルト*/
+#all_yaer p{
+  color: #808080;
+}
+
+/*イベントタイトル*/
+.event_title{
+  font-weight: 700;
+  font-size: 140%;
+  margin: 5px 0;
+}
+
+/*イベント本文*/
+.event_main{
+  line-height:1.8em;
+}
+
+/*イベントボタンエリア*/
+.event_btn{
+  position: absolute;
+	bottom: 0;
+  padding-bottom: 20px;
+  margin: 0 10px;
+}
+.event_btn:hover{
+  opacity: 0.4;
+}
+
+/*イベント前へボタン*/
+.back{
+  float: left;
+}
+
+/*イベント次へボタン*/
+.next{
+  float: right;
+  right: 0;
+}
+
+/*性別・年齢別人口グラフ*/
+#left {
+  width: 40%;
+  display: inline-block;
+}
+#right {
+  width: 56%;
+  display: inline-block;
+}
+#cnt {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/*性別・年齢別人口グラフ性別名legend*/
+.highcharts-legend-item text{
+  cursor:default !important;
+  fill: #f0f8ff !important;
+}
+.highcharts-axis-labels text{
+  fill: #f0f8ff !important;
+}
+
+/*1都3県集中率*/
+#capital_rate{
+  position: absolute;
+  right: 0;
+  margin: 10px 10px 0 0;
+}
+
+/*人口単位*/
+#unit_prefecture{
+  position: absolute;
+  left: 220px;
+  margin-top:25px;
+}
+
+/*グラフ一部パーツ非表示*/
+.highcharts-credits{
+  display: none;
+}
+
+#prefecture_glaph .highcharts-container {
+  height: 330px !important;
+}
+
+#prefecture_glaph .highcharts-legend{
+  display: none;
+}
+
+/*ボタン押下後ぐるぐる*/
+#overlay, #dialog_modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+    height:100%;
+    background: rgba(0,0,0,0.6);
+}
+/*ボタン押下後ぐるぐる*/
+#overlay{
+  display: none;
+}
+.cv-spinner {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.spinner {
+    width: 80px;
+    height: 80px;
+    border: 4px #ddd solid;
+    border-top: 4px #999 solid;
+    border-radius: 50%;
+    animation: sp-anime 0.8s infinite linear;
+}
+@keyframes sp-anime {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(359deg); }
+}
+.is-hide{
+    display:none;
+}
+
+/*画面右下の注釈*/
+#bottom_note{
+  color: #fffafa;
+}
+
+/*10秒タイムウォッチ*/
+.pie {
+  position: fixed;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #242a3c;
+  background: linear-gradient(to right, #242a3c 50%, #add8e6 0);/*左が紺色、右が黄色*/
+  float: right;
+  top: 75px;
+  right: 100px;
+}
+.pie::before {
+  content: '';
+  display: block;
+  margin-left: 50%;
+  height: 100%;
+  border-radius: 0 100% 100% 0 / 50%;
+  background-color: #242a3c;
+  transform-origin: left;
+  animation: spin 10s linear infinite,color 20s step-end infinite;/*半円が反転するのにかかる時間は10秒。20秒の半分で半円の色を変える*/
+}
+@keyframes spin { to { transform: rotate(.5turn); } }
+@keyframes color { 50% { background: #add8e6; } }
+
+/*ダイアログ*/
+#detail_dialog{
+  height: auto;
+  width: max-content;
+  z-index: 1000;
+  text-align: center;
+  background: #242a3c;
+  color: #fffafa;
+  border: 1px solid black;
+  font-size: 15px;
+}
+
+.dialog_btn{
+  position: relative;
+  top: 5px;
+  color: #fffafa;
+  background: #061a2b;/*背景色*/
+  border-radius: 4px;/*角の丸み*/
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 2px 2px rgba(0, 0, 0, 0.19);
+  font-weight: bold;
+}
+
+/*以下、レスポンシブ対応*/
+/*レスポンシブ時の出来事エリアのパーツ定義*/
+.sp_event{
+  padding: 0 30px;
+}
+/*次へ前へボタン*/
+.sp_event_btn{
+  position: absolute;
+  margin-right: 30px;
+}
+
+/*スマホの時のみbreak*/
+#sp_break{
+  display: none;
+}
+
+/*タブレットの時*/
+@media screen and (max-width:1250px) {
+  /*タブレット用イベント表示*/
+  .sp_event{
+    display: block;
+  }
+  /*出来事非表示*/
+  .first_right{
+    display: none;
+  }
+  /*都道府県別被害と性別年齢別人口で幅いっぱいにする*/
+  .first_left{
+    width: 55%;
+  }
+  .second_center{
+    width: 45%;
+  }
+
+  /*文字サイズ変更*/
+  .color_description
+  ,#age_glaph_note
+  ,#unit_age
+  ,#unit_prefecture{
+    font-size: 10px;
+  }
+}
+
+/*スマホの時*/
+@media screen and (max-width:700px) {
+  /*都道府県別被害と性別年齢別人口それぞれマックスに*/
+  .row_first{
+    display: block;
+    margin-right: 12px;
+  }
+  .first_left{
+    width: 100%;
+  }
+  .second_center{
+    width: 100%;
+  }
+
+  /*スマホの時のみbreak*/
+  #sp_break{
+    display: block;
+  }
+
+  /*スマホの時のみ文字小さく*/
+  #detail_dialog{
+    font-size: 12px;
+  }
+
+  /*グラフの高さ*/
+  #prefecture_glaph .highcharts-container {
+    height: 780px !important;
+  }
+
+  /*1都3県集中率*/
+  #capital_rate{
+    bottom: 5px;
+    font-size: 10px;
+  }
+
+  /*年ボタン*/
+  .year_p{
+    margin: 0 20px 0 10px;
+  }
+}

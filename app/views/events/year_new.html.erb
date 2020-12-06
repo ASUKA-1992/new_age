@@ -1,0 +1,16 @@
+<%= stylesheet_link_tag 'year_new' %>
+<div class="body">
+  <div class="div_center">
+    <div>年別人口増減登録</div>
+    <%= form_for @event,:url => {controller: "events", action: "year_create"} do |form| %>
+      <table id="age_new_table" class="table_main inline-block">
+              該当年
+              <%= form.date_select  :date,
+                  start_year: 2011, end_year: 2020,
+                  use_month_numbers: true %>
+      <div id="suibmit_btn">
+        <%= form.submit value="男女・年齢別人口増減登録へ", data: {confirm: "該当年の年別人口増減データが上書きされます。よろしいですか?"} %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<div class="body_narrow">
+  <div class="div_center">
+    <div class="div_bold">■出来事一覧画面■</div>
+    <!-- <div>事実とフィクションを混在させ、最低1つの都道府県を沈没させましょう</div> -->
+    <div>登録できる出来事は最大50です</div>
+    <span class="side_margin">
+      <%= link_to "出来事新規登録", :new_event, :class=>'no_border_link' %>
+    </span>
+    <% if @admin_flg %>
+      <span class="side_margin">
+        <%= link_to "デフォルト年間人口増減登録", :year_new_events, :class=>'no_border_link' %>
+      </span>
+    <% end %>
+  </div>
+
+  <% if @admin_flg %>
+    <div class="div_center">
+      <%= form_tag :set_mamber_filter_events, method: :get do %>
+        ユーザー絞込
+        <%= select_tag 'filter_member_id', options_for_select(@members),class:"td_w100" %>
+        <%= submit_tag "確定" %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if !@is_exists_first_day %>
+    <div class="div_center">2011-01-01の出来事を登録してください</div>
+  <% end %>
+
+  <div class="div_center">
+    <% if @events.present? %>
+      <div class="inline-block">
+        <table class="table_main table_color_odd head_color">
+          <thead>
+            <tr>
+              <% if @admin_flg %>
+                <th class="td_w75 font_12">デフォルト</th>
+                <th class="td_w75 font_12">メンバーID</th>
+                <th class="td_w50">ID</th>
+              <% end %>
+              <th class="td_w100">日付</th>
+              <th class="td_w50">タイプ</th>
+              <th class="td_w75 font_12">フィクション</th>
+              <th class="td_w50">有効</th>
+              <th class="">出来事タイトル</th>
+              <th class="td_w100">総人口増減</th>
+              <th class="td_w100 font_12">総人口-<br/>性別・年齢別人口</th>
+              <th class="td_w100 font_12">総人口-<br/>居住地別人口</th>
+            </tr>
+          </thead>
+          <tbody class="table_body">
+            <% @events.each do |event| %>
+              <tr class="<%= controller.get_row_class(event) %>">
+                <% if @admin_flg %>
+                  <td class="font_12"><%= controller.get_flg_value(event.delault_flg) %></td>
+                  <td class="font_12"><%= event.member_id %></td>
+                  <td class=""><%= event.id %></td>
+                <% end %>
+                <td class=""><%= link_to event.date, event, :class=>'no_border_link' %></td>
+                <td class=""><%= controller.get_value_type(event.event_type) %></td>
+                <td class=""><%= controller.get_flg_value(event.is_fake) %></td>
+                <td class=""><%= controller.get_flg_value(event.is_active) %></td>
+                <td class="div_left"><%= event.title %></td>
+                <td class="div_right"><%= event.population_change.to_s(:delimited) %></td>
+                <td class="font_12"><%= controller.exist_event_data(event.id, "event_age") %></td>
+                <td class="font_12"><%= controller.exist_event_data(event.id, "event_prefecture") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <p>登録されている出来事が存在しません</p>
+    <% end %>
+  </div>
+</div>

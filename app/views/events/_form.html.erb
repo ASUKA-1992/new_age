@@ -1,0 +1,563 @@
+<%= javascript_include_tag "event_new_edit.js" %>
+<div class="body">
+  <div class="div_center">
+    <div class="div_bold">■出来事情報入力画面■</div><br/>
+    <%= link_to "戻る", @event, :class=>'no_border_link' %>
+    <div><span class="div_bold">出来事情報を入力してください</span></div>
+    <%= render "shared/errors", obj: @event %>
+    <%= form_for @event do |form| %>
+
+      <table id="age_new_table" class="table_main inline-block">
+        <tbody class="table_body">
+          <tr>
+            <th class="td_w100">
+              見出し<span class="font_9 font_wight_lighter"> 25文字以内</span>
+            </th>
+            <td colspan="3" class="div_left"><%= form.text_field :title, size:65 %></td>
+            <th class="td_w75">日付</th>
+            <td class="div_left" id="saelect_date">
+              <%= form.date_select  :date,
+                  start_year: 2011, end_year: 2020,
+                  use_month_numbers: true, :id=>'a' %>
+            </td>
+            <th class="td_w75">総人口増減</th>
+            <td class="div_left">
+              <%= form.text_field :population_change, size: 20, :class=>'age_new_input' %>
+            </td>
+          </tr>
+          <tr>
+            <th class="">
+              詳細<span class="font_9 font_wight_lighter"> 200文字以内</span>
+            </th>
+            <td colspan="5" class=""><%= form.text_area :detail, cols: 95, rows: 5 %></td>
+            <td colspan="2">
+              <%= form.radio_button :is_fake, false %>
+              事実
+              <%= form.radio_button :is_fake, true %>
+              フィクション <br/>
+              <% if @admin_flg || controller.check_first_data(@event) %>
+                <%= form.radio_button :is_active, true %>
+                有効
+                <%= form.radio_button :is_active, false %>
+                無効
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td class="font_12">
+              <p class="div_bold">汚染・沈没設定</p>
+                ■ボタン説明■<br/>
+                上/左から<br/>
+                ○汚染なし<br/>
+                <span class="color_5">●</span>一部放射能汚染<br/>
+                <span class="color_6">●</span>全域放射能汚染<br/><br/>
+                下/左から<br/>
+                ○沈没なし<br/>
+                <span class="color_3">●</span>一部沈没<br/>
+                <span class="color_7">●</span>全域沈没
+              </td>
+            <td colspan="7" class="">
+              <table id="age_new_table" class="table_main inline-block">
+                <thead>
+                  <tr>
+                    <th colspan="2" class="font_12">北海道・東北</th>
+                    <th colspan="2">関東</th>
+                    <th colspan="2">中部</th>
+                    <th colspan="2">近畿</th>
+                    <th colspan="2">中国・四国</th>
+                    <th colspan="2">九州・沖縄</th>
+                  </tr>
+                </thead>
+                <tbody class="table_body">
+                  <tr>
+                    <td class="td_w75">北海道</td>
+                    <td class="">
+                      <input type="radio" name="P1-Hokkaido" class="radio radio_0" id="P1-Hokkaido_0" value="1-Hokkaido" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P1-Hokkaido" class="radio radio_p1" id="P1-Hokkaido_1" value="1-Hokkaido" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P1-Hokkaido" class="radio radio_p2" id="P1-Hokkaido_2" value="1-Hokkaido" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="1-Hokkaido"  class="radio radio_0" id="1-Hokkaido_0" value="1-Hokkaido" onChange="change_0(this.value)">
+                      <input type="radio" name="1-Hokkaido"  class="radio radio_1" id="1-Hokkaido_1" value="1-Hokkaido" onChange="change_1(this.value)">
+                      <input type="radio" name="1-Hokkaido"  class="radio radio_2" id="1-Hokkaido_2" value="1-Hokkaido" onChange="change_2(this.value)">
+                    </td>
+                    <td class="td_w75">茨城県</td>
+                    <td class="">
+                      <input type="radio" name="P8-Ibaraki" class="radio radio_0" id="P8-Ibaraki_0" value="8-Ibaraki" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P8-Ibaraki" class="radio radio_p1" id="P8-Ibaraki_1" value="8-Ibaraki" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P8-Ibaraki" class="radio radio_p2" id="P8-Ibaraki_2" value="8-Ibaraki" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="8-Ibaraki" class="radio radio_0" id="8-Ibaraki_0" value="8-Ibaraki" onChange="change_0(this.value)">
+                      <input type="radio" name="8-Ibaraki" class="radio radio_1" id="8-Ibaraki_1" value="8-Ibaraki" onChange="change_1(this.value)">
+                      <input type="radio" name="8-Ibaraki" class="radio radio_2" id="8-Ibaraki_2" value="8-Ibaraki" onChange="change_2(this.value)">
+                    </td>
+                    <td class="td_w75">新潟県</td>
+                    <td class="">
+                      <input type="radio" name="P15-Niigata" class="radio radio_0" id="P15-Niigata_0" value="15-Niigata" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P15-Niigata" class="radio radio_p1" id="P15-Niigata_1" value="15-Niigata" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P15-Niigata" class="radio radio_p2" id="P15-Niigata_2" value="15-Niigata" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="15-Niigata" class="radio radio_0" id="15-Niigata_0" value="15-Niigata" onChange="change_0(this.value)">
+                      <input type="radio" name="15-Niigata" class="radio radio_1" id="15-Niigata_1" value="15-Niigata" onChange="change_1(this.value)">
+                      <input type="radio" name="15-Niigata" class="radio radio_2" id="15-Niigata_2" value="15-Niigata" onChange="change_2(this.value)">
+                    </td>
+                    <td class="td_w75">三重県</td>
+                    <td class="">
+                      <input type="radio" name="P24-Mie" class="radio radio_0" id="P24-Mie_0" value="24-Mie" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P24-Mie" class="radio radio_p1" id="P24-Mie_1" value="24-Mie" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P24-Mie" class="radio radio_p2" id="P24-Mie_2" value="24-Mie" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="24-Mie" class="radio radio_0" id="24-Mie_0" value="24-Mie" onChange="change_0(this.value)">
+                      <input type="radio" name="24-Mie" class="radio radio_1" id="24-Mie_1" value="24-Mie" onChange="change_1(this.value)">
+                      <input type="radio" name="24-Mie" class="radio radio_2" id="24-Mie_2" value="24-Mie" onChange="change_2(this.value)">
+                    </td>
+                    <td class="td_w75">鳥取県</td>
+                    <td class="">
+                      <input type="radio" name="P31-Tottori" class="radio radio_0" id="P31-Tottori_0" value="31-Tottori" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P31-Tottori" class="radio radio_p1" id="P31-Tottori_1" value="31-Tottori" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P31-Tottori" class="radio radio_p2" id="P31-Tottori_2" value="31-Tottori" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="31-Tottori" class="radio radio_0" id="31-Tottori_0" value="31-Tottori" onChange="change_0(this.value)">
+                      <input type="radio" name="31-Tottori" class="radio radio_1" id="31-Tottori_1" value="31-Tottori" onChange="change_1(this.value)">
+                      <input type="radio" name="31-Tottori" class="radio radio_2" id="31-Tottori_2" value="31-Tottori" onChange="change_2(this.value)">
+                    </td>
+                    <td class="td_w75">福岡県</td>
+                    <td class="">
+                      <input type="radio" name="P40-Fukuoka" class="radio radio_0" id="P40-Fukuoka_0" value="40-Fukuoka" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P40-Fukuoka" class="radio radio_p1" id="P40-Fukuoka_1" value="40-Fukuoka" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P40-Fukuoka" class="radio radio_p2" id="P40-Fukuoka_2" value="40-Fukuoka" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="40-Fukuoka" class="radio radio_0" id="40-Fukuoka_0" value="40-Fukuoka" onChange="change_0(this.value)">
+                      <input type="radio" name="40-Fukuoka" class="radio radio_1" id="40-Fukuoka_1" value="40-Fukuoka" onChange="change_1(this.value)">
+                      <input type="radio" name="40-Fukuoka" class="radio radio_2" id="40-Fukuoka_2" value="40-Fukuoka" onChange="change_2(this.value)">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="">青森県</td>
+                    <td class="">
+                      <input type="radio" name="P2-Aomori" class="radio radio_0" id="P2-Aomori_0" value="2-Aomori" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P2-Aomori" class="radio radio_p1" id="P2-Aomori_1" value="2-Aomori" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P2-Aomori" class="radio radio_p2" id="P2-Aomori_2" value="2-Aomori" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="2-Aomori" class="radio radio_0" id="2-Aomori_0" value="2-Aomori" onChange="change_0(this.value)">
+                      <input type="radio" name="2-Aomori" class="radio radio_1" id="2-Aomori_1" value="2-Aomori" onChange="change_1(this.value)">
+                      <input type="radio" name="2-Aomori" class="radio radio_2" id="2-Aomori_2" value="2-Aomori" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">栃木県</td>
+                    <td class="">
+                      <input type="radio" name="P9-Tochigi" class="radio radio_0" id="P9-Tochigi_0" value="9-Tochigi" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P9-Tochigi" class="radio radio_p1" id="P9-Tochigi_1" value="9-Tochigi" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P9-Tochigi" class="radio radio_p2" id="P9-Tochigi_2" value="9-Tochigi" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="9-Tochigi" class="radio radio_0" id="9-Tochigi_0" value="9-Tochigi" onChange="change_0(this.value)">
+                      <input type="radio" name="9-Tochigi" class="radio radio_1" id="9-Tochigi_1" value="9-Tochigi" onChange="change_1(this.value)">
+                      <input type="radio" name="9-Tochigi" class="radio radio_2" id="9-Tochigi_2" value="9-Tochigi" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">富山県</td>
+                    <td class="">
+                      <input type="radio" name="P16-Toyama" class="radio radio_0" id="P16-Toyama_0" value="16-Toyama" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P16-Toyama" class="radio radio_p1" id="P16-Toyama_1" value="16-Toyama" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P16-Toyama" class="radio radio_p2" id="P16-Toyama_2" value="16-Toyama" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="16-Toyama" class="radio radio_0" id="16-Toyama_0" value="16-Toyama" onChange="change_0(this.value)">
+                      <input type="radio" name="16-Toyama" class="radio radio_1" id="16-Toyama_1" value="16-Toyama" onChange="change_1(this.value)">
+                      <input type="radio" name="16-Toyama" class="radio radio_2" id="16-Toyama_2" value="16-Toyama" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">滋賀県</td>
+                    <td class="">
+                      <input type="radio" name="P25-Shiga" class="radio radio_0" id="P25-Shiga_0" value="25-Shiga" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P25-Shiga" class="radio radio_p1" id="P25-Shiga_1" value="25-Shiga" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P25-Shiga" class="radio radio_p2" id="P25-Shiga_2" value="25-Shiga" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="25-Shiga" class="radio radio_0" id="25-Shiga_0" value="25-Shiga" onChange="change_0(this.value)">
+                      <input type="radio" name="25-Shiga" class="radio radio_1" id="25-Shiga_1" value="25-Shiga" onChange="change_1(this.value)">
+                      <input type="radio" name="25-Shiga" class="radio radio_2" id="25-Shiga_2" value="25-Shiga" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">島根県</td>
+                    <td class="">
+                      <input type="radio" name="P32-Shimane" class="radio radio_0" id="P32-Shimane_0" value="32-Shimane" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P32-Shimane" class="radio radio_p1" id="P32-Shimane_1" value="32-Shimane" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P32-Shimane" class="radio radio_p2" id="P32-Shimane_2" value="32-Shimane" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="32-Shimane" class="radio radio_0" id="32-Shimane_0" value="32-Shimane" onChange="change_0(this.value)">
+                      <input type="radio" name="32-Shimane" class="radio radio_1" id="32-Shimane_1" value="32-Shimane" onChange="change_1(this.value)">
+                      <input type="radio" name="32-Shimane" class="radio radio_2" id="32-Shimane_2" value="32-Shimane" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">佐賀県</td>
+                    <td class="">
+                      <input type="radio" name="P41-Saga" class="radio radio_0" id="P41-Saga_0" value="41-Saga" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P41-Saga" class="radio radio_p1" id="P41-Saga_1" value="41-Saga" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P41-Saga" class="radio radio_p2" id="P41-Saga_2" value="41-Saga" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="41-Saga" class="radio radio_0" id="41-Saga_0" value="41-Saga" onChange="change_0(this.value)">
+                      <input type="radio" name="41-Saga" class="radio radio_1" id="41-Saga_1" value="41-Saga" onChange="change_1(this.value)">
+                      <input type="radio" name="41-Saga" class="radio radio_2" id="41-Saga_2" value="41-Saga" onChange="change_2(this.value)">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="">岩手県</td>
+                    <td class="">
+                      <input type="radio" name="P3-Iwate" class="radio radio_0" id="P3-Iwate_0" value="3-Iwate" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P3-Iwate" class="radio radio_p1" id="P3-Iwate_1" value="3-Iwate" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P3-Iwate" class="radio radio_p2" id="P3-Iwate_2" value="3-Iwate" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="3-Iwate" class="radio radio_0" id="3-Iwate_0" value="3-Iwate" onChange="change_0(this.value)">
+                      <input type="radio" name="3-Iwate" class="radio radio_1" id="3-Iwate_1" value="3-Iwate" onChange="change_1(this.value)">
+                      <input type="radio" name="3-Iwate" class="radio radio_2" id="3-Iwate_2" value="3-Iwate" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">群馬県</td>
+                    <td class="">
+                      <input type="radio" name="P10-Gunma" class="radio radio_0" id="P10-Gunma_0" value="10-Gunma" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P10-Gunma" class="radio radio_p1" id="P10-Gunma_1" value="10-Gunma" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P10-Gunma" class="radio radio_p2" id="P10-Gunma_2" value="10-Gunma" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="10-Gunma" class="radio radio_0" id="10-Gunma_0" value="10-Gunma" onChange="change_0(this.value)">
+                      <input type="radio" name="10-Gunma" class="radio radio_1" id="10-Gunma_1" value="10-Gunma" onChange="change_1(this.value)">
+                      <input type="radio" name="10-Gunma" class="radio radio_2" id="10-Gunma_2" value="10-Gunma" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">石川県</td>
+                    <td class="">
+                      <input type="radio" name="P17-Ishikawa" class="radio radio_0" id="P17-Ishikawa_0" value="17-Ishikawa" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P17-Ishikawa" class="radio radio_p1" id="P17-Ishikawa_1" value="17-Ishikawa" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P17-Ishikawa" class="radio radio_p2" id="P17-Ishikawa_2" value="17-Ishikawa" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="17-Ishikawa" class="radio radio_0" id="17-Ishikawa_0" value="17-Ishikawa" onChange="change_0(this.value)">
+                      <input type="radio" name="17-Ishikawa" class="radio radio_1" id="17-Ishikawa_1" value="17-Ishikawa" onChange="change_1(this.value)">
+                      <input type="radio" name="17-Ishikawa" class="radio radio_2" id="17-Ishikawa_2" value="17-Ishikawa" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">京都府</td>
+                    <td class="">
+                      <input type="radio" name="P26-Kyoto" class="radio radio_0" id="P26-Kyoto_0" value="26-Kyoto" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P26-Kyoto" class="radio radio_p1" id="P26-Kyoto_1" value="26-Kyoto" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P26-Kyoto" class="radio radio_p2" id="P26-Kyoto_2" value="26-Kyoto" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="26-Kyoto" class="radio radio_0" id="26-Kyoto_0" value="26-Kyoto" onChange="change_0(this.value)">
+                      <input type="radio" name="26-Kyoto" class="radio radio_1" id="26-Kyoto_1" value="26-Kyoto" onChange="change_1(this.value)">
+                      <input type="radio" name="26-Kyoto" class="radio radio_2" id="26-Kyoto_2" value="26-Kyoto" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">岡山県</td>
+                    <td class="">
+                      <input type="radio" name="P33-Okayama" class="radio radio_0" id="P33-Okayama_0" value="33-Okayama" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P33-Okayama" class="radio radio_p1" id="P33-Okayama_1" value="33-Okayama" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P33-Okayama" class="radio radio_p2" id="P33-Okayama_2" value="33-Okayama" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="33-Okayama" class="radio radio_0" id="33-Okayama_0" value="33-Okayama" onChange="change_0(this.value)">
+                      <input type="radio" name="33-Okayama" class="radio radio_1" id="33-Okayama_1" value="33-Okayama" onChange="change_1(this.value)">
+                      <input type="radio" name="33-Okayama" class="radio radio_2" id="33-Okayama_2" value="33-Okayama" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">長崎県</td>
+                    <td class="">
+                      <input type="radio" name="P42-Nagasaki" class="radio radio_0" id="P42-Nagasaki_0" value="42-Nagasaki" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P42-Nagasaki" class="radio radio_p1" id="P42-Nagasaki_1" value="42-Nagasaki" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P42-Nagasaki" class="radio radio_p2" id="P42-Nagasaki_2" value="42-Nagasaki" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="42-Nagasaki" class="radio radio_0" id="42-Nagasaki_0" value="42-Nagasaki" onChange="change_0(this.value)">
+                      <input type="radio" name="42-Nagasaki" class="radio radio_1" id="42-Nagasaki_1" value="42-Nagasaki" onChange="change_1(this.value)">
+                      <input type="radio" name="42-Nagasaki" class="radio radio_2" id="42-Nagasaki_2" value="42-Nagasaki" onChange="change_2(this.value)">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="">秋田県</td>
+                    <td class="">
+                      <input type="radio" name="P4-Akita" class="radio radio_0" id="P4-Akita_0" value="4-Akita" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P4-Akita" class="radio radio_p1" id="P4-Akita_1" value="4-Akita" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P4-Akita" class="radio radio_p2" id="P4-Akita_2" value="4-Akita" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="4-Akita" class="radio radio_0" id="4-Akita_0" value="4-Akita" onChange="change_0(this.value)">
+                      <input type="radio" name="4-Akita" class="radio radio_1" id="4-Akita_1" value="4-Akita" onChange="change_1(this.value)">
+                      <input type="radio" name="4-Akita" class="radio radio_2" id="4-Akita_2" value="4-Akita" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">埼玉県</td>
+                    <td class="">
+                      <input type="radio" name="P11-Saitama" class="radio radio_0" id="P11-Saitama_0" value="11-Saitama" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P11-Saitama" class="radio radio_p1" id="P11-Saitama_1" value="11-Saitama" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P11-Saitama" class="radio radio_p2" id="P11-Saitama_2" value="11-Saitama" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="11-Saitama" class="radio radio_0" id="11-Saitama_0" value="11-Saitama" onChange="change_0(this.value)">
+                      <input type="radio" name="11-Saitama" class="radio radio_1" id="11-Saitama_1" value="11-Saitama" onChange="change_1(this.value)">
+                      <input type="radio" name="11-Saitama" class="radio radio_2" id="11-Saitama_2" value="11-Saitama" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">福井県</td>
+                    <td class="">
+                      <input type="radio" name="P18-Fukui" class="radio radio_0" id="P18-Fukui_0" value="18-Fukui" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P18-Fukui" class="radio radio_p1" id="P18-Fukui_1" value="18-Fukui" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P18-Fukui" class="radio radio_p2" id="P18-Fukui_2" value="18-Fukui" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="18-Fukui" class="radio radio_0" id="18-Fukui_0" value="18-Fukui" onChange="change_0(this.value)">
+                      <input type="radio" name="18-Fukui" class="radio radio_1" id="18-Fukui_1" value="18-Fukui" onChange="change_1(this.value)">
+                      <input type="radio" name="18-Fukui" class="radio radio_2" id="18-Fukui_2" value="18-Fukui" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">大阪府</td>
+                    <td class="">
+                      <input type="radio" name="P27-Osaka" class="radio radio_0" id="P27-Osaka_0" value="27-Osaka" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P27-Osaka" class="radio radio_p1" id="P27-Osaka_1" value="27-Osaka" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P27-Osaka" class="radio radio_p2" id="P27-Osaka_2" value="27-Osaka" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="27-Osaka" class="radio radio_0" id="27-Osaka_0" value="27-Osaka" onChange="change_0(this.value)">
+                      <input type="radio" name="27-Osaka" class="radio radio_1" id="27-Osaka_1" value="27-Osaka" onChange="change_1(this.value)">
+                      <input type="radio" name="27-Osaka" class="radio radio_2" id="27-Osaka_2" value="27-Osaka" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">広島県</td>
+                    <td class="">
+                      <input type="radio" name="P34-Hiroshima" class="radio radio_0" id="P34-Hiroshima_0" value="34-Hiroshima" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P34-Hiroshima" class="radio radio_p1" id="P34-Hiroshima_1" value="34-Hiroshima" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P34-Hiroshima" class="radio radio_p2" id="P34-Hiroshima_2" value="34-Hiroshima" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="34-Hiroshima" class="radio radio_0" id="34-Hiroshima_0" value="34-Hiroshima" onChange="change_0(this.value)">
+                      <input type="radio" name="34-Hiroshima" class="radio radio_1" id="34-Hiroshima_1" value="34-Hiroshima" onChange="change_1(this.value)">
+                      <input type="radio" name="34-Hiroshima" class="radio radio_2" id="34-Hiroshima_2" value="34-Hiroshima" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">熊本県</td>
+                    <td class="">
+                      <input type="radio" name="P43-Kumamoto" class="radio radio_0" id="P43-Kumamoto_0" value="43-Kumamoto" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P43-Kumamoto" class="radio radio_p1" id="P43-Kumamoto_1" value="43-Kumamoto" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P43-Kumamoto" class="radio radio_p2" id="P43-Kumamoto_2" value="43-Kumamoto" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="43-Kumamoto" class="radio radio_0" id="43-Kumamoto_0" value="43-Kumamoto" onChange="change_0(this.value)">
+                      <input type="radio" name="43-Kumamoto" class="radio radio_1" id="43-Kumamoto_1" value="43-Kumamoto" onChange="change_1(this.value)">
+                      <input type="radio" name="43-Kumamoto" class="radio radio_2" id="43-Kumamoto_2" value="43-Kumamoto" onChange="change_2(this.value)">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="">宮城県</td>
+                    <td class="">
+                      <input type="radio" name="P5-Miyagi" class="radio radio_0" id="P5-Miyagi_0" value="5-Miyagi" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P5-Miyagi" class="radio radio_p1" id="P5-Miyagi_1" value="5-Miyagi" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P5-Miyagi" class="radio radio_p2" id="P5-Miyagi_2" value="5-Miyagi" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="5-Miyagi" class="radio radio_0" id="5-Miyagi_0" value="5-Miyagi" onChange="change_0(this.value)">
+                      <input type="radio" name="5-Miyagi" class="radio radio_1" id="5-Miyagi_1" value="5-Miyagi" onChange="change_1(this.value)">
+                      <input type="radio" name="5-Miyagi" class="radio radio_2" id="5-Miyagi_2" value="5-Miyagi" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">千葉県</td>
+                    <td class="">
+                      <input type="radio" name="P12-Chiba" class="radio radio_0" id="P12-Chiba_0" value="12-Chiba" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P12-Chiba" class="radio radio_p1" id="P12-Chiba_1" value="12-Chiba" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P12-Chiba" class="radio radio_p2" id="P12-Chiba_2" value="12-Chiba" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="12-Chiba" class="radio radio_0" id="12-Chiba_0" value="12-Chiba" onChange="change_0(this.value)">
+                      <input type="radio" name="12-Chiba" class="radio radio_1" id="12-Chiba_1" value="12-Chiba" onChange="change_1(this.value)">
+                      <input type="radio" name="12-Chiba" class="radio radio_2" id="12-Chiba_2" value="12-Chiba" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">山梨県</td>
+                    <td class="">
+                      <input type="radio" name="P19-Yamanashi" class="radio radio_0" id="P19-Yamanashi_0" value="19-Yamanashi" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P19-Yamanashi" class="radio radio_p1" id="P19-Yamanashi_1" value="19-Yamanashi" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P19-Yamanashi" class="radio radio_p2" id="P19-Yamanashi_2" value="19-Yamanashi" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="19-Yamanashi" class="radio radio_0" id="19-Yamanashi_0" value="19-Yamanashi" onChange="change_0(this.value)">
+                      <input type="radio" name="19-Yamanashi" class="radio radio_1" id="19-Yamanashi_1" value="19-Yamanashi" onChange="change_1(this.value)">
+                      <input type="radio" name="19-Yamanashi" class="radio radio_2" id="19-Yamanashi_2" value="19-Yamanashi" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">兵庫県</td>
+                    <td class="">
+                      <input type="radio" name="P28-Hyogo" class="radio radio_0" id="P28-Hyogo_0" value="28-Hyogo" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P28-Hyogo" class="radio radio_p1" id="P28-Hyogo_1" value="28-Hyogo" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P28-Hyogo" class="radio radio_p2" id="P28-Hyogo_2" value="28-Hyogo" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="28-Hyogo" class="radio radio_0" id="28-Hyogo_0" value="28-Hyogo" onChange="change_0(this.value)">
+                      <input type="radio" name="28-Hyogo" class="radio radio_1" id="28-Hyogo_1" value="28-Hyogo" onChange="change_1(this.value)">
+                      <input type="radio" name="28-Hyogo" class="radio radio_2" id="28-Hyogo_2" value="28-Hyogo" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">山口県</td>
+                    <td class="">
+                      <input type="radio" name="P35-Yamaguchi" class="radio radio_0" id="P35-Yamaguchi_0" value="35-Yamaguchi" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P35-Yamaguchi" class="radio radio_p1" id="P35-Yamaguchi_1" value="35-Yamaguchi" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P35-Yamaguchi" class="radio radio_p2" id="P35-Yamaguchi_2" value="35-Yamaguchi" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="35-Yamaguchi" class="radio radio_0" id="35-Yamaguchi_0" value="35-Yamaguchi" onChange="change_0(this.value)">
+                      <input type="radio" name="35-Yamaguchi" class="radio radio_1" id="35-Yamaguchi_1" value="35-Yamaguchi" onChange="change_1(this.value)">
+                      <input type="radio" name="35-Yamaguchi" class="radio radio_2" id="35-Yamaguchi_2" value="35-Yamaguchi" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">大分県</td>
+                    <td class="">
+                      <input type="radio" name="P44-Oita" class="radio radio_0" id="P44-Oita_0" value="44-Oita" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P44-Oita" class="radio radio_p1" id="P44-Oita_1" value="44-Oita" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P44-Oita" class="radio radio_p2" id="P44-Oita_2" value="44-Oita" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="44-Oita" class="radio radio_0" id="44-Oita_0" value="44-Oita" onChange="change_0(this.value)">
+                      <input type="radio" name="44-Oita" class="radio radio_1" id="44-Oita_1" value="44-Oita" onChange="change_1(this.value)">
+                      <input type="radio" name="44-Oita" class="radio radio_2" id="44-Oita_2" value="44-Oita" onChange="change_2(this.value)">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="">山形県</td>
+                    <td class="">
+                      <input type="radio" name="P6-Yamagata" class="radio radio_0" id="P6-Yamagata_0" value="6-Yamagata" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P6-Yamagata" class="radio radio_p1" id="P6-Yamagata_1" value="6-Yamagata" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P6-Yamagata" class="radio radio_p2" id="P6-Yamagata_2" value="6-Yamagata" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="6-Yamagata" class="radio radio_0" id="6-Yamagata_0" value="6-Yamagata" onChange="change_0(this.value)">
+                      <input type="radio" name="6-Yamagata" class="radio radio_1" id="6-Yamagata_1" value="6-Yamagata" onChange="change_1(this.value)">
+                      <input type="radio" name="6-Yamagata" class="radio radio_2" id="6-Yamagata_2" value="6-Yamagata" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">東京都</td>
+                    <td class="">
+                      <input type="radio" name="P13-Tokyo" class="radio radio_0" id="P13-Tokyo_0" value="13-Tokyo" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P13-Tokyo" class="radio radio_p1" id="P13-Tokyo_1" value="13-Tokyo" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P13-Tokyo" class="radio radio_p2" id="P13-Tokyo_2" value="13-Tokyo" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="13-Tokyo" class="radio radio_0" id="13-Tokyo_0" value="13-Tokyo" onChange="change_0(this.value)">
+                      <input type="radio" name="13-Tokyo" class="radio radio_1" id="13-Tokyo_1" value="13-Tokyo" onChange="change_1(this.value)">
+                      <input type="radio" name="13-Tokyo" class="radio radio_2" id="13-Tokyo_2" value="13-Tokyo" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">長野県</td>
+                    <td class="">
+                      <input type="radio" name="P20-Nagano" class="radio radio_0" id="P20-Nagano_0" value="20-Nagano" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P20-Nagano" class="radio radio_p1" id="P20-Nagano_1" value="20-Nagano" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P20-Nagano" class="radio radio_p2" id="P20-Nagano_2" value="20-Nagano" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="20-Nagano" class="radio radio_0" id="20-Nagano_0" value="20-Nagano" onChange="change_0(this.value)">
+                      <input type="radio" name="20-Nagano" class="radio radio_1" id="20-Nagano_1" value="20-Nagano" onChange="change_1(this.value)">
+                      <input type="radio" name="20-Nagano" class="radio radio_2" id="20-Nagano_2" value="20-Nagano" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">奈良県</td>
+                    <td class="">
+                      <input type="radio" name="P29-Nara" class="radio radio_0" id="P29-Nara_0" value="29-Nara" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P29-Nara" class="radio radio_p1" id="P29-Nara_1" value="29-Nara" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P29-Nara" class="radio radio_p2" id="P29-Nara_2" value="29-Nara" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="29-Nara" class="radio radio_0" id="29-Nara_0" value="29-Nara" onChange="change_0(this.value)">
+                      <input type="radio" name="29-Nara" class="radio radio_1" id="29-Nara_1" value="29-Nara" onChange="change_1(this.value)">
+                      <input type="radio" name="29-Nara" class="radio radio_2" id="29-Nara_2" value="29-Nara" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">徳島県</td>
+                    <td class="">
+                      <input type="radio" name="P36-Tokushima" class="radio radio_0" id="P36-Tokushima_0" value="36-Tokushima" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P36-Tokushima" class="radio radio_p1" id="P36-Tokushima_1" value="36-Tokushima" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P36-Tokushima" class="radio radio_p2" id="P36-Tokushima_2" value="36-Tokushima" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="36-Tokushima" class="radio radio_0" id="36-Tokushima_0" value="36-Tokushima" onChange="change_0(this.value)">
+                      <input type="radio" name="36-Tokushima" class="radio radio_1" id="36-Tokushima_1" value="36-Tokushima" onChange="change_1(this.value)">
+                      <input type="radio" name="36-Tokushima" class="radio radio_2" id="36-Tokushima_2" value="36-Tokushima" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">宮崎県</td>
+                    <td class="">
+                      <input type="radio" name="P45-Miyazaki" class="radio radio_0" id="P45-Miyazaki_0" value="45-Miyazaki" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P45-Miyazaki" class="radio radio_p1" id="P45-Miyazaki_1" value="45-Miyazaki" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P45-Miyazaki" class="radio radio_p2" id="P45-Miyazaki_2" value="45-Miyazaki" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="45-Miyazaki" class="radio radio_0" id="45-Miyazaki_0" value="45-Miyazaki" onChange="change_0(this.value)">
+                      <input type="radio" name="45-Miyazaki" class="radio radio_1" id="45-Miyazaki_1" value="45-Miyazaki" onChange="change_1(this.value)">
+                      <input type="radio" name="45-Miyazaki" class="radio radio_2" id="45-Miyazaki_2" value="45-Miyazaki" onChange="change_2(this.value)">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="">福島県</td>
+                    <td class="">
+                      <input type="radio" name="P7-Fukushima" class="radio radio_0" id="P7-Fukushima_0" value="7-Fukushima" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P7-Fukushima" class="radio radio_p1" id="P7-Fukushima_1" value="7-Fukushima" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P7-Fukushima" class="radio radio_p2" id="P7-Fukushima_2" value="7-Fukushima" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="7-Fukushima" class="radio radio_0" id="7-Fukushima_0" value="7-Fukushima" onChange="change_0(this.value)">
+                      <input type="radio" name="7-Fukushima" class="radio radio_1" id="7-Fukushima_1" value="7-Fukushima" onChange="change_1(this.value)">
+                      <input type="radio" name="7-Fukushima" class="radio radio_2" id="7-Fukushima_2" value="7-Fukushima" onChange="change_2(this.value)"
+                    </td>
+                    <td class="">神奈川県</td>
+                    <td class="">
+                      <input type="radio" name="P14-Kanagawa" class="radio radio_0" id="P14-Kanagawa_0" value="14-Kanagawa" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P14-Kanagawa" class="radio radio_p1" id="P14-Kanagawa_1" value="14-Kanagawa" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P14-Kanagawa" class="radio radio_p2" id="P14-Kanagawa_2" value="14-Kanagawa" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="14-Kanagawa" class="radio radio_0" id="14-Kanagawa_0" value="14-Kanagawa" onChange="change_0(this.value)">
+                      <input type="radio" name="14-Kanagawa" class="radio radio_1" id="14-Kanagawa_1" value="14-Kanagawa" onChange="change_1(this.value)">
+                      <input type="radio" name="14-Kanagawa" class="radio radio_2" id="14-Kanagawa_2" value="14-Kanagawa" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">岐阜県</td>
+                    <td class="">
+                      <input type="radio" name="P21-Gifu" class="radio radio_0" id="P21-Gifu_0" value="21-Gifu" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P21-Gifu" class="radio radio_p1" id="P21-Gifu_1" value="21-Gifu" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P21-Gifu" class="radio radio_p2" id="P21-Gifu_2" value="21-Gifu" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="21-Gifu" class="radio radio_0" id="21-Gifu_0" value="21-Gifu" onChange="change_0(this.value)">
+                      <input type="radio" name="21-Gifu" class="radio radio_1" id="21-Gifu_1" value="21-Gifu" onChange="change_1(this.value)">
+                      <input type="radio" name="21-Gifu" class="radio radio_2" id="21-Gifu_2" value="21-Gifu" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">和歌山県</td>
+                    <td class="">
+                      <input type="radio" name="P30-Wakayama" class="radio radio_0" id="P30-Wakayama_0" value="30-Wakayama" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P30-Wakayama" class="radio radio_p1" id="P30-Wakayama_1" value="30-Wakayama" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P30-Wakayama" class="radio radio_p2" id="P30-Wakayama_2" value="30-Wakayama" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="30-Wakayama" class="radio radio_0" id="30-Wakayama_0" value="30-Wakayama" onChange="change_0(this.value)">
+                      <input type="radio" name="30-Wakayama" class="radio radio_1" id="30-Wakayama_1" value="30-Wakayama" onChange="change_1(this.value)">
+                      <input type="radio" name="30-Wakayama" class="radio radio_2" id="30-Wakayama_2" value="30-Wakayama" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">香川県</td>
+                    <td class="">
+                      <input type="radio" name="P37-Kagawa" class="radio radio_0" id="P37-Kagawa_0" value="37-Kagawa" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P37-Kagawa" class="radio radio_p1" id="P37-Kagawa_1" value="37-Kagawa" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P37-Kagawa" class="radio radio_p2" id="P37-Kagawa_2" value="37-Kagawa" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="37-Kagawa" class="radio radio_0" id="37-Kagawa_0" value="37-Kagawa" onChange="change_0(this.value)">
+                      <input type="radio" name="37-Kagawa" class="radio radio_1" id="37-Kagawa_1" value="37-Kagawa" onChange="change_1(this.value)">
+                      <input type="radio" name="37-Kagawa" class="radio radio_2" id="37-Kagawa_2" value="37-Kagawa" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">鹿児島</td>
+                    <td class="">
+                      <input type="radio" name="P46-Kagoshima" class="radio radio_0" id="P46-Kagoshima_0" value="46-Kagoshima" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P46-Kagoshima" class="radio radio_p1" id="P46-Kagoshima_1" value="46-Kagoshima" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P46-Kagoshima" class="radio radio_p2" id="P46-Kagoshima_2" value="46-Kagoshima" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="46-Kagoshima" class="radio radio_0" id="46-Kagoshima_0" value="46-Kagoshima" onChange="change_0(this.value)">
+                      <input type="radio" name="46-Kagoshima" class="radio radio_1" id="46-Kagoshima_1" value="46-Kagoshima" onChange="change_1(this.value)">
+                      <input type="radio" name="46-Kagoshima" class="radio radio_2" id="46-Kagoshima_2" value="46-Kagoshima" onChange="change_2(this.value)">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class="">静岡県</td>
+                    <td class="">
+                      <input type="radio" name="P22-Shizuoka" class="radio radio_0" id="P22-Shizuoka_0" value="22-Shizuoka" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P22-Shizuoka" class="radio radio_p1" id="P22-Shizuoka_1" value="22-Shizuoka" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P22-Shizuoka" class="radio radio_p2" id="P22-Shizuoka_2" value="22-Shizuoka" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="22-Shizuoka" class="radio radio_0" id="22-Shizuoka_0" value="22-Shizuoka" onChange="change_0(this.value)">
+                      <input type="radio" name="22-Shizuoka" class="radio radio_1" id="22-Shizuoka_1" value="22-Shizuoka" onChange="change_1(this.value)">
+                      <input type="radio" name="22-Shizuoka" class="radio radio_2" id="22-Shizuoka_2" value="22-Shizuoka" onChange="change_2(this.value)">
+                    </td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class="">愛媛県</td>
+                    <td class="">
+                      <input type="radio" name="P38-Ehime" class="radio radio_0" id="P38-Ehime_0" value="38-Ehime" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P38-Ehime" class="radio radio_p1" id="P38-Ehime_1" value="38-Ehime" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P38-Ehime" class="radio radio_p2" id="P38-Ehime_2" value="38-Ehime" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="38-Ehime" class="radio radio_0" id="38-Ehime_0" value="38-Ehime" onChange="change_0(this.value)">
+                      <input type="radio" name="38-Ehime" class="radio radio_1" id="38-Ehime_1" value="38-Ehime" onChange="change_1(this.value)">
+                      <input type="radio" name="38-Ehime" class="radio radio_2" id="38-Ehime_2" value="38-Ehime" onChange="change_2(this.value)">
+                    </td>
+                    <td class="">沖縄県</td>
+                    <td class="">
+                      <input type="radio" name="P47-Okinawa" class="radio radio_0" id="P47-Okinawa_0" value="47-Okinawa" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P47-Okinawa" class="radio radio_p1" id="P47-Okinawa_1" value="47-Okinawa" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P47-Okinawa" class="radio radio_p2" id="P47-Okinawa_2" value="47-Okinawa" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="47-Okinawa" class="radio radio_0" id="47-Okinawa_0" value="47-Okinawa" onChange="change_0(this.value)">
+                      <input type="radio" name="47-Okinawa" class="radio radio_1" id="47-Okinawa_1" value="47-Okinawa" onChange="change_1(this.value)">
+                      <input type="radio" name="47-Okinawa" class="radio radio_2" id="47-Okinawa_2" value="47-Okinawa" onChange="change_2(this.value)">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class="">愛知県</td>
+                    <td class="">
+                      <input type="radio" name="P23-Aichi" class="radio radio_0" id="P23-Aichi_0" value="23-Aichi" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P23-Aichi" class="radio radio_p1" id="P23-Aichi_1" value="23-Aichi" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P23-Aichi" class="radio radio_p2" id="P23-Aichi_2" value="23-Aichi" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="23-Aichi" class="radio radio_0" id="23-Aichi_0" value="23-Aichi" onChange="change_0(this.value)">
+                      <input type="radio" name="23-Aichi" class="radio radio_1" id="23-Aichi_1" value="23-Aichi" onChange="change_1(this.value)">
+                      <input type="radio" name="23-Aichi" class="radio radio_2" id="23-Aichi_2" value="23-Aichi" onChange="change_2(this.value)">
+                    </td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class="">高知県</td>
+                    <td class="">
+                      <input type="radio" name="P39-Kochi" class="radio radio_0" id="P39-Kochi_0" value="39-Kochi" onChange="P_change_0(this.value)">
+                      <input type="radio" name="P39-Kochi" class="radio radio_p1" id="P39-Kochi_1" value="39-Kochi" onChange="P_change_1(this.value)">
+                      <input type="radio" name="P39-Kochi" class="radio radio_p2" id="P39-Kochi_2" value="39-Kochi" onChange="P_change_2(this.value)"><br/>
+                      <input type="radio" name="39-Kochi" class="radio radio_0" id="39-Kochi_0" value="39-Kochi" onChange="change_0(this.value)">
+                      <input type="radio" name="39-Kochi" class="radio radio_1" id="39-Kochi_1" value="39-Kochi" onChange="change_1(this.value)">
+                      <input type="radio" name="39-Kochi" class="radio radio_2" id="39-Kochi_2" value="39-Kochi" onChange="change_2(this.value)">
+                    </td>
+                    <td class=""></td>
+                    <td class=""></td>
+                  </tr>
+                </tbody>
+              </table>
+              <br/>
+              <div class="div_left font_10">
+                ・[一部放射能汚染][全域放射能汚染][一部沈没][完全沈没]を設定すると、次の出来事以降、その状態が自動的に継続します<br/>
+                ・[一部放射能汚染][全域放射能汚染][一部沈没][完全沈没]を設定すると、次の出来事以降、該当都道府県を[汚染/沈没なし]を設定することはできません
+              </div>
+              <%= form.hidden_field :half_pollution, size:30, :id=>'pollution_half_commma'%>
+              <%= form.hidden_field :pollution, size:30, :id=>'pollution_commma'%>
+              <%= form.hidden_field :half_sinking, size:30, :id=>'prefecture_half_commma'%>
+              <%= form.hidden_field :sinking, size:30, :id=>'prefecture_commma'%>
+            </td>
+          </tr>
+        </table>
+
+        <% if @admin_flg %>
+          <br/>
+          管理者専用
+          <br/>
+          メンバー選択:
+            <%= select_tag 'member_id', options_for_select(@members),class:"td_w100" %>
+          | 現在: <%= @event.member_id %>
+          <br/>
+          デフォルト設定:
+          <%= form.check_box :delault_flg %>
+        <% end %>
+
+      <div id="suibmit_btn">
+        <% if @event.event_type == 1 %>
+          <%= form.submit value="確定 ※注意!!※", data: { confirm: "年間人口増減データの更新は推奨されません。よろしいですか?"} %>
+        <% elsif %>
+          <%= form.submit value="確定" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

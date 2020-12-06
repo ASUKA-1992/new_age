@@ -1,0 +1,86 @@
+<%= javascript_include_tag "age.js" %>
+<div class="body">
+  <div class="div_center">
+    <div>2011年1月1日時点の総人口:
+      <span class="div_bold"><%= @total_population.value.to_s(:delimited) %></span>人
+    </div>
+
+    <%# 隠しパーツbegin　ココに入っている値をJSが読む　%>
+    <input type="hidden" id="total_population" value=<%= @total_population.value %> readonly>
+    <%# 隠しパーツend　%>
+
+    <%= form_for @age_and_genders do |form| %>
+      <table id="age_new_table" class="table_main inline-block head_color">
+        <thead>
+          <tr>
+            <th class="td_w150">女性</th>
+            <th class="td_w200">出生年|年齢</th>
+            <th class="td_w150">男性</th>
+          </tr>
+        <tbody class="table_body">
+          <tr>
+            <td class=""><%= form.text_field :F1910, size: 10, :class=>'age_new_input' %></td>
+            <td class="">～1910'/<%= controller.get_age(2010, nil, 1919) %>歳～</td>
+            <td class=""><%= form.text_field :M1910, size: 10, :class=>'age_new_input'  %></td>
+          </tr>
+          <tr>
+            <td class=""><%= form.text_field :F1920, size: 10, :class=>'age_new_input'  %></td>
+            <td class="">～1920'/<%= controller.get_age(2010, 1920, 1929) %>歳</td>
+            <td class=""><%= form.text_field :M1920, size: 10, :class=>'age_new_input'  %></td>
+          </tr>
+          <tr>
+            <td class=""><%= form.text_field :F1930, size: 10, :class=>'age_new_input'  %></td>
+            <td class="">～1930'/<%= controller.get_age(2010, 1930, 1939) %>歳</td>
+            <td class=""><%= form.text_field :M1930, size: 10, :class=>'age_new_input'  %></td>
+          </tr>
+          <tr>
+            <td class=""><%= form.text_field :F1940, size: 10, :class=>'age_new_input'  %></td>
+            <td class="">～1940'/<%= controller.get_age(2010, 1940, 1949) %>歳</td>
+            <td class=""><%= form.text_field :M1940, size: 10, :class=>'age_new_input'  %></td>
+          </tr>
+          <tr>
+            <td class=""><%= form.text_field :F1950, size: 10, :class=>'age_new_input'  %></td>
+            <td class="">～1950'/<%= controller.get_age(2010, 1950, 1959) %>歳</td>
+            <td class=""><%= form.text_field :M1950, size: 10, :class=>'age_new_input'  %></td>
+          </tr>
+          <tr>
+            <td class=""><%= form.text_field :F1960, size: 10, :class=>'age_new_input'  %></td>
+            <td class="">～1960'/<%= controller.get_age(2010, 1960, 1969) %>歳</td>
+            <td class=""><%= form.text_field :M1960, size: 10, :class=>'age_new_input'  %></td>
+          </tr>
+          <tr>
+            <td class=""><%= form.text_field :F1970, size: 10, :class=>'age_new_input'  %></td>
+            <td class="">～1970'/<%= controller.get_age(2010, 1970, 1979) %>歳</td>
+            <td class=""><%= form.text_field :M1970, size: 10, :class=>'age_new_input'  %></td>
+          </tr>
+          <tr>
+            <td class=""><%= form.text_field :F1980, size: 10, :class=>'age_new_input'  %></td>
+            <td class="">～1980'/<%= controller.get_age(2010, 1980, 1989) %>歳</td>
+            <td class=""><%= form.text_field :M1980, size: 10, :class=>'age_new_input'  %></td>
+          </tr>
+          <tr>
+            <td class=""><%= form.text_field :F1990, size: 10, :class=>'age_new_input'  %></td>
+            <td class="">～1990'/<%= controller.get_age(2010, 1990, 1999) %>歳</td>
+            <td class=""><%= form.text_field :M1990, size: 10, :class=>'age_new_input'  %></td>
+          </tr>
+          <tr>
+            <td class=""><%= form.text_field :F2000, size: 10, :class=>'age_new_input'  %></td>
+            <td class="">～2000'/<%= controller.get_age(2010, 2000, 2009) %>歳</td>
+            <td class=""><%= form.text_field :M2000, size: 10, :class=>'age_new_input'  %></td>
+          </tr>
+          <tr>
+            <td class=""><%= form.text_field :F2010, size: 10, :class=>'age_new_input'  %></td>
+            <td class="">～2010'/0歳～</td>
+            <td class=""><%= form.text_field :M2010, size: 10, :class=>'age_new_input'  %></td>
+          </tr>
+      </table>
+      <div>
+        計:<input class="input_readonly right_margin" id="total" value="" readonly>
+        差:<input class="input_readonly" id="diff" value="" readonly>
+      </div>
+      <div id="suibmit_btn">
+        <%= form.submit value="確定" %>
+      </div>
+    <% end %>
+  </div>
+</div>

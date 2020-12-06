@@ -1,0 +1,100 @@
+<%= javascript_include_tag "csv.js" %>
+<div class="body">
+  <div class="div_center">
+    <div class="div_bold">■作品登録画面■</div><br/>
+
+    <div class="div_inline_flex bottom_margin">
+      <span class="div_bold">現在公開作品</span>:<span id="current_csv"><%= @target_csv %></span>
+      <%= form_tag :stop_open_csvs, method: :get, class:"side_margin" do %>
+        <% if !@default_data_flg %>
+          <%= submit_tag "公開停止",
+            data: {confirm: "作品公開を停止します。よろしいですか?"} %>
+        <% end %>
+      <% end %>
+    </div>
+
+
+    <div class="div_inline_flex bottom_margin div_width_100per">
+      <div class="div_width_50per div_right">
+        <% if @under50_flg %>
+          <%= form_tag :make_csv_csvs, method: :get, class:"side_margin" do %>
+            <span class="div_bold">作品名</span>
+            <span class="font_9 font_wight_lighter">(25文字以内)</span>:<%= text_field_tag 'file_name', params[:file_name] %>
+              <%= submit_tag "確定" %>
+          <% end %>
+        <% else %>
+          <div class="alert side_margin">出来事が51行以上のため、作品の保存ができません</div>
+        <% end %>
+      </div>
+
+      <div class="div_width_50per div_inline_flex">
+        <%= form_tag :set_target_csv_csvs, method: :get, class:"" do %>
+          <span class="div_bold">表示作品</span>:
+          <%= select_tag 'csv', options_for_select(@csv_arr),class:"td_w200" ,onChange: "set_delete_file()" %>
+          <% if @admin_flg %>
+            <span class="div_display_none" id="update_default">
+              デフォルトも上書く<input type="checkbox" name="update_default" value="true">
+            </span>
+          <% end %>
+          <%= submit_tag "公開", class:"div_display_none", id:"csv_decide_btn" %>
+        <% end %>
+
+        <%= form_tag :show_data_csvs, method: :get, class:"left_margin_10px div_display_none", id:"show_data_form" do %>
+          <input name="csv" class="div_display_none" id="show_file" value=""/>
+          <%= submit_tag "閲覧" %>
+        <% end %>
+
+        <%= form_tag :delete_target_csv_csvs, method: :get, class:"left_margin_10px div_display_none", id:"delete_file_form" do %>
+          <input name="csv" class="div_display_none" id="delete_file" value=""/>
+          <%= submit_tag "削除",
+            data: {confirm: "選択された作品を削除します。よろしいですか?"} %>
+        <% end %>
+      </div>
+    </div>
+
+    <div>有効な出来事一覧</div>
+
+    <% if @disp_arr.present? %>
+      <table class="table_main table_color_odd head_color">
+        <thead>
+          <tr>
+            <th class="td_w50">no</th>
+            <th class="td_w100">日付</th>
+            <th class="td_w75 font_12">フィクション</th>
+            <th class="td_w200">出来事タイトル</th>
+            <th class="td_w100">総人口</th>
+            <th class="td_w100 font_9">性別・年齢別人口</th>
+            <th class="td_w100 font_9">総人口-<br/>性別・年齢別人口</th>
+            <th class="td_w100 font_9">居住地別人口</th>
+            <th class="td_w100 font_9">総人口-<br/>居住地別人口</th>
+            <th class="td_w250">一部汚染</th>
+            <th class="td_w250">全域汚染</th>
+            <th class="td_w250">一部沈没</th>
+            <th class="td_w250">全域沈没</th>
+            <th class="td_w250">全域沈没してるが<br/>人口1以上</th>
+          </tr>
+        </thead>
+        <tbody class="table_body">
+          <% @disp_arr.each do |record| %>
+            <tr class="">
+              <td class=""><%= record["no"] %></td>
+              <td class=""><%= record["date"] %></td>
+              <td class=""><%= controller.get_flg_value(record["is_fake"]) %></td>
+              <td class="div_left"><div class="shortcut"><%= record["title"] %></td>
+              <td class=""><%= record["total"].to_s(:delimited) %></td>
+              <td class="td_w100"><%= record["age_total"].to_s(:delimited) %></td>
+              <td class="td_w50 <%= controller.return_alert_class(record["age_diff"]) %>"><%= record["age_diff"].to_s(:delimited) %></td>
+              <td class="td_w100"><%= record["prefecture_total"].to_s(:delimited) %></td>
+              <td class="td_w50 <%= controller.return_alert_class(record["prefecture_diff"]) %>"><%= record["prefecture_diff"].to_s(:delimited) %></td>
+              <td class="div_left font_9"><%= record["half_pollution"] %></td>
+              <td class="div_left font_9"><%= record["pollution"] %></td>
+              <td class="div_left font_9"><%= record["half_snking"] %></td>
+              <td class="div_left font_9"><%= record["snking"] %></td>
+              <td class="div_left font_9 <%= controller.return_alert_class_str(record["error"]) %>"><%= record["error"] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</div>

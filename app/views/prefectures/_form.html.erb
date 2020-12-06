@@ -1,0 +1,161 @@
+<%= javascript_include_tag "age.js" %>
+<div class="body">
+  <div class="div_center">
+    <div>2011年1月1日時点の総人口:
+      <span class="div_bold"><%= @total_population.value.to_s(:delimited) %></span>人
+    </div>
+
+    <%# 隠しパーツbegin　ココに入っている値をJSが読む　%>
+    <input type="hidden" id="total_population" value=<%= @total_population.value %> readonly>
+    <%# 隠しパーツend　%>
+
+    <%= form_for @prefectures do |form| %>
+      <table id="age_new_table" class="table_main inline-block head_color">
+        <thead>
+          <tr>
+            <th colspan="2">北海道・東北</th>
+            <th colspan="2">関東</th>
+            <th colspan="2">中部</th>
+            <th colspan="2">近畿</th>
+            <th colspan="2">中国・四国</th>
+            <th colspan="2">九州・沖縄・海外</th>
+          </tr>
+        <tbody class="table_body">
+          <tr>
+            <td class="td_w75">北海道</td>
+            <td class=""><%= form.text_field :Hokkaido, size: 10, :class=>'age_new_input' %></td>
+            <td class="td_w75">茨城県</td>
+            <td class=""><%= form.text_field :Ibaraki, size: 10, :class=>'age_new_input' %></td>
+            <td class="td_w75">新潟県</td>
+            <td class=""><%= form.text_field :Niigata, size: 10, :class=>'age_new_input' %></td>
+            <td class="td_w75">三重県</td>
+            <td class=""><%= form.text_field :Mie, size: 10, :class=>'age_new_input' %></td>
+            <td class="td_w75">鳥取県</td>
+            <td class=""><%= form.text_field :Tottori, size: 10, :class=>'age_new_input' %></td>
+            <td class="td_w75">福岡県</td>
+            <td class=""><%= form.text_field :Fukuoka, size: 10, :class=>'age_new_input' %></td>
+          </tr>
+          <tr>
+            <td class="">青森県</td>
+            <td class=""><%= form.text_field :Aomori, size: 10, :class=>'age_new_input' %></td>
+            <td class="">栃木県</td>
+            <td class=""><%= form.text_field :Tochigi, size: 10, :class=>'age_new_input' %></td>
+            <td class="">富山県</td>
+            <td class=""><%= form.text_field :Toyama, size: 10, :class=>'age_new_input' %></td>
+            <td class="">滋賀県</td>
+            <td class=""><%= form.text_field :Shiga, size: 10, :class=>'age_new_input' %></td>
+            <td class="">島根県</td>
+            <td class=""><%= form.text_field :Shimane, size: 10, :class=>'age_new_input' %></td>
+            <td class="">佐賀県</td>
+            <td class=""><%= form.text_field :Saga, size: 10, :class=>'age_new_input' %></td>
+          </tr>
+          <tr>
+            <td class="td_w75">岩手県</td>
+            <td class=""><%= form.text_field :Iwate, size: 10, :class=>'age_new_input' %></td>
+            <td class="">群馬県</td>
+            <td class=""><%= form.text_field :Gunma, size: 10, :class=>'age_new_input' %></td>
+            <td class="">石川県</td>
+            <td class=""><%= form.text_field :Ishikawa, size: 10, :class=>'age_new_input' %></td>
+            <td class="">京都府</td>
+            <td class=""><%= form.text_field :Kyoto, size: 10, :class=>'age_new_input' %></td>
+            <td class="">岡山県</td>
+            <td class=""><%= form.text_field :Okayama, size: 10, :class=>'age_new_input' %></td>
+            <td class="">長崎県</td>
+            <td class=""><%= form.text_field :Nagasaki, size: 10, :class=>'age_new_input' %></td>
+          </tr>
+          <tr>
+            <td class="">秋田県</td>
+            <td class=""><%= form.text_field :Akita, size: 10, :class=>'age_new_input' %></td>
+            <td class="">埼玉県</td>
+            <td class=""><%= form.text_field :Saitama, size: 10, :class=>'age_new_input' %></td>
+            <td class="">福井県</td>
+            <td class=""><%= form.text_field :Fukui, size: 10, :class=>'age_new_input' %></td>
+            <td class="">大阪府</td>
+            <td class=""><%= form.text_field :Osaka, size: 10, :class=>'age_new_input' %></td>
+            <td class="">広島県</td>
+            <td class=""><%= form.text_field :Hiroshima, size: 10, :class=>'age_new_input' %></td>
+            <td class="">熊本県</td>
+            <td class=""><%= form.text_field :Kumamoto, size: 10, :class=>'age_new_input' %></td>
+          </tr>
+          <tr>
+            <td class="">宮城県</td>
+            <td class=""><%= form.text_field :Miyagi, size: 10, :class=>'age_new_input' %></td>
+            <td class="">千葉県</td>
+            <td class=""><%= form.text_field :Chiba, size: 10, :class=>'age_new_input' %></td>
+            <td class="">山梨県</td>
+            <td class=""><%= form.text_field :Yamanashi, size: 10, :class=>'age_new_input' %></td>
+            <td class="">兵庫県</td>
+            <td class=""><%= form.text_field :Hyogo, size: 10, :class=>'age_new_input' %></td>
+            <td class="">山口県</td>
+            <td class=""><%= form.text_field :Yamaguchi, size: 10, :class=>'age_new_input' %></td>
+            <td class="">大分県</td>
+            <td class=""><%= form.text_field :Oita, size: 10, :class=>'age_new_input' %></td>
+          </tr>
+          <tr>
+            <td class="">山形県</td>
+            <td class=""><%= form.text_field :Yamagata, size: 10, :class=>'age_new_input' %></td>
+            <td class="">東京都</td>
+            <td class=""><%= form.text_field :Tokyo, size: 10, :class=>'age_new_input' %></td>
+            <td class="">長野県</td>
+            <td class=""><%= form.text_field :Nagano, size: 10, :class=>'age_new_input' %></td>
+            <td class="">奈良県</td>
+            <td class=""><%= form.text_field :Nara, size: 10, :class=>'age_new_input' %></td>
+            <td class="">徳島県</td>
+            <td class=""><%= form.text_field :Tokushima, size: 10, :class=>'age_new_input' %></td>
+            <td class="">宮崎県</td>
+            <td class=""><%= form.text_field :Miyazaki, size: 10, :class=>'age_new_input' %></td>
+          </tr>
+          <tr>
+            <td class="">福島県</td>
+            <td class=""><%= form.text_field :Fukushima, size: 10, :class=>'age_new_input' %></td>
+            <td class="">神奈川県</td>
+            <td class=""><%= form.text_field :Kanagawa, size: 10, :class=>'age_new_input' %></td>
+            <td class="">岐阜県</td>
+            <td class=""><%= form.text_field :Gifu, size: 10, :class=>'age_new_input' %></td>
+            <td class="">和歌山県</td>
+            <td class=""><%= form.text_field :Wakayama, size: 10, :class=>'age_new_input' %></td>
+            <td class="">香川県</td>
+            <td class=""><%= form.text_field :Kagawa, size: 10, :class=>'age_new_input' %></td>
+            <td class="">鹿児島</td>
+            <td class=""><%= form.text_field :Kagoshima, size: 10, :class=>'age_new_input' %></td>
+          </tr>
+          <tr>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="">静岡県</td>
+            <td class=""><%= form.text_field :Shizuoka, size: 10, :class=>'age_new_input' %></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="">愛媛県</td>
+            <td class=""><%= form.text_field :Ehime, size: 10, :class=>'age_new_input' %></td>
+            <td class="">沖縄県</td>
+            <td class=""><%= form.text_field :Okinawa, size: 10, :class=>'age_new_input' %></td>
+          </tr>
+          <tr>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="">愛知県</td>
+            <td class=""><%= form.text_field :Aichi, size: 10, :class=>'age_new_input' %></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="">高知県</td>
+            <td class=""><%= form.text_field :Kochi, size: 10, :class=>'age_new_input' %></td>
+            <td class="">海外</td>
+            <td class=""><%= form.text_field :Others, size: 10, :class=>'age_new_input' %></td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        計:<input class="input_readonly right_margin" id="total" value="" readonly>
+        差:<input class="input_readonly" id="diff" value="" readonly>
+      </div>
+      <div id="suibmit_btn">
+        <%= form.submit value="確定" %>
+      </div>
+    <% end %>
+  </div>
+</div>

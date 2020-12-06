@@ -1,0 +1,35 @@
+<%= stylesheet_link_tag 'header' %>
+<% if session[:member_name].present? %>
+  <div class="header_all">
+    <div class="header_disp">
+      <div class="header_left">
+          <%= link_to "会員トップ", :ten_years, :class=>'no_border_link' %>
+          <%= link_to "初期人口", :consts, :class=>'no_border_link' %>
+          <%= link_to "出来事登録", :events, :class=>'no_border_link' %>
+          <%= link_to "作品登録", :csvs, :class=>'no_border_link' %>
+          <% if session[:member_admin] %>
+            <%= link_to "メンバー管理・公開作品", :members, :class=>'no_border_link' %>
+          <% else %>
+            <%= link_to "公開作品", :members, :class=>'no_border_link' %>
+          <% end %>
+          <%= link_to "操作マニュアル", :manual_ten_years, :class=>'no_border_link' %>
+      </div>
+      <div class="header_right">
+        <%= link_to session[:member_name], edit_member_path(id: session[:member_id]), :class=>'no_border_link' %>
+        <%= link_to "ログアウト", :session, :class=>'no_border_link',
+          method: :delete, data: { confirm: "ログアウトしますか?" }  %>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="body_narrow">
+      <div class="div_center">
+        <%= link_to "トップページ", :ten_years, :class=>'color_year_date side_margin' %>
+        <div class="sp_brake div_height_5px"><br/></div>
+        <!--<%= link_to "「新しい10年間/わたしたちの日本沈没」とは?", :detail_ten_years, :class=>'color_year_date side_margin' %>
+        <div class="sp_brake div_height_5px"><br/></div>-->
+        <%= link_to "ログイン", :login_members, :class=>'color_year_date side_margin' %>
+        <%= link_to "会員登録", :new_member, :class=>'color_year_date side_margin' %>
+      </div>
+  </div>
+<% end %>

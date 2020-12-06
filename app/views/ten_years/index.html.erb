@@ -1,0 +1,142 @@
+<%= javascript_include_tag "jquery.japan-map.js" %>
+<%= javascript_include_tag "main.js" %>
+<%= stylesheet_link_tag 'main' %>
+<%= javascript_include_tag "Highcharts-8.0.4/code/highcharts.js" %>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+
+<body>
+  <div class="div_display_none">
+    <% if session[:member_id].present? %>
+      <input id="login" value="true"/>
+    <% else %>
+      <input id="login" value="false"/>
+    <% end %>
+  </div>
+
+  <dialog id="detail_dialog">
+    <div class="div_center">
+      もうすぐ幕を閉じる、21世紀2度目の10年間。<br/>
+      このサイトでは、この10年間の日本の出来事を、<br/>
+      人口変動とともに振り返ることができます。
+      <!--10年前に抱えていた課題を、<br/>日本は乗り越えることができたのか――。<br/>
+      仮に3.11以上の災害があったら、<br/>この国はどうなっていたのか――。<br/><br/>
+
+      少なくとも1つの都道府県が沈没していたら、<br/>
+      為政者は何を語り、<br/>国際社会はどう反応し、<br/>各地域の人口はどのように変化したのか。<br/><br/>
+
+      このサイトでは、会員登録をすれば、<br/>
+      誰もが自分だけの「日本沈没」を作ることができます。<br/><br/>
+
+      ※このページでは、本サイトで作成したサンプルの
+      <div id="sp_break"></div>
+      「日本沈没」ストーリーをご覧いただけます -->
+    </div>
+  	<button class="dialog_btn div_cursor_hand" type="button" onclick="close_dialog()">CLOSE</button>
+  </dialog>
+  <div id="dialog_modal"></div>
+
+  <div class="pie" style="display:none"></div>
+  <div class="top">
+    <%= image_tag "logo.png", size: "250x70", alt: "タイトル" %>
+  </div>
+  <div id="all_yaer" class="div_center div_flex_center no_border_link">
+    <div class="div_inline_flex">
+      <p id="select_2011" class="year_p side_margin div_cursor_hand color_year_date">2011</p>
+      <p id="select_2012" class="year_p side_margin div_cursor_hand color_year_date">2012</p>
+      <p id="select_2013" class="year_p side_margin div_cursor_hand color_year_date">2013</p>
+      <p id="select_2014" class="year_p side_margin div_cursor_hand color_year_date">2014</p>
+      <p id="select_2015" class="year_p side_margin div_cursor_hand color_year_date">2015</p>
+    </div>
+    <div class="div_inline_flex">
+      <p id="select_2016" class="year_p side_margin div_cursor_hand color_year_date">2016</p>
+      <p id="select_2017" class="year_p side_margin div_cursor_hand color_year_date">2017</p>
+      <p id="select_2018" class="year_p side_margin div_cursor_hand color_year_date">2018</p>
+      <p id="select_2019" class="year_p side_margin div_cursor_hand color_year_date">2019</p>
+      <p id="select_2020" class="year_p side_margin div_cursor_hand color_year_date">2020</p>
+    </div>
+  </div>
+  <div class="main">
+
+    <div class="sp_event block">
+      <div>
+        <p class='sp_event_btn div_cursor_hand back'>前へ</p>
+        <p class='sp_event_btn div_cursor_hand next'>次へ</p>
+      </div>
+
+      <p class="color_year_date event_date" id="sp_event_date">YYYY/MM/DD(x)</p>
+
+      <h1 class="event_title" id="sp_event_title">SAMPLE</h1>
+      <p class="event_main" id="sp_event_main">SAMPLE</p>
+    </div>
+
+    <div class="row_first">
+      <div class="block first_left">
+        <div class="div_flex">
+          <p class="block_title">都道府県別被害</p>
+          <div class="color_description font_12">
+            <div id="color_1"><span class="color_1">■</span>死者:10~50人</div>
+            <div id="color_2"><span class="color_2">■</span>死者:51人以上</div>
+            <div id="color_5"><span class="color_5">■</span>一部放射能汚染</div>
+            <div id="color_6"><span class="color_6">■</span>全域放射能汚染</div>
+            <div id="color_3"><span class="color_3">■</span>一部沈没</div>
+          </div>
+        </div>
+        <div id="map"></div>
+      </div>
+
+      <div class="block second_center">
+        <div class="div_flex">
+          <p class="block_title">性別・年齢別人口</p>
+          <div id="unit_age" class="font_12">単位:100万人</div>
+          <div id="age_glaph_note" class="no_margin font_12">※2011/1/1時点の年齢|単位:100万人</div>
+        </div>
+        <div id="cnt">
+          <div id="left"></div>
+          <div id="right"></div>
+        </div>
+      </div>
+
+      <div class="block first_right">
+        <p class="event_date color_year_date" id="event_date">YYYY/MM/DD(x)</p>
+        <h1 class="event_title" id="event_title">SAMPLE</h1>
+        <p class="event_main" id="event_main">SAMPLE</p>
+        <%= image_tag "img_back.png", size: "48x48", alt: "戻る", class:'event_btn div_cursor_hand back'%>
+        <%= image_tag "img_next.png", size: "48x48", alt: "次へ", class:'event_btn div_cursor_hand next'%>
+      </div>
+    </div>
+
+    <div class="row_second">
+      <div class="block second_left">
+        <div class="div_flex">
+          <p class="block_title">都道府県別人口</p>
+          <div id="capital_rate"></div>
+          <div id="unit_prefecture" class="font_12">単位:10万人</div>
+        </div>
+        <div id="prefecture_glaph"></div>
+      </div>
+    </div>
+
+    <div class="font_9 div_right" id="bottom_note">※人口は日本国籍保持者と永住権保持者の累計</div>
+  </div>
+
+  <!-- loding -->
+  <div id="overlay">
+      <div class="cv-spinner">
+          <span class="spinner"></span>
+      </div>
+  </div>
+
+  <div class="div_display_none">
+    <input id="data_now" value="0" readonly/>
+    <input id="data_max" value="" readonly/>
+
+    <% if @data_arr.present? %>
+      <div id="data_div">
+      <% @data_arr.each_with_index do |data, i| %>
+        <input id="data_<%= i %>" value="<%= data %>" readonly/><br/>
+      <% end %>
+      </div>
+    <% end %>
+  </div>
+
+</body>

@@ -1,0 +1,42 @@
+/*■■■■■■ヘッダ■■■■■■*/
+/*ヘッダ全体*/
+.header_all{
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding-right: 0;
+  background-color: #beccea;
+  height:43px;
+  font-size: 14.5px;
+}
+
+/*ヘッダ画面範囲内*/
+.header_disp{
+  padding: 0;
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+}
+
+/*ヘッダ内パーツ*/
+.header_left
+, .header_right{
+  display: flex;
+}
+
+.header_left a
+, .header_right a{
+  margin-left: 10px;
+}
+
+/*ヘッダテキスト*/
+.header_p{
+  margin: auto;
+}
+
+/*下線なしリンク*/
+.no_border_link{
+  text-decoration: none;
+  margin: 0 10px;
+}

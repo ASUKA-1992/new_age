@@ -1,0 +1,76 @@
+<div class="body_narrow">
+  <% if session[:member_admin] %>
+    <div class="div_center">
+      <%= link_to "メンバー新規登録", :new_member, :class=>'no_border_link' %>
+    </div>
+    <div class="div_center">
+      <% if @members.present? %>
+        <table class="table_main inline-block">
+          <thead>
+            <tr>
+              <th class="td_w50">ID</th>
+              <th class="td_w100">ユーザー名</th>
+              <th class="td_w400">メールアドレス</th>
+              <th class="td_w50">管理者</th>
+              <th>公開データ</th>
+              <th>退会日時</th>
+              <th>削除</th>
+              <th>パスワードリセット</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @members.each do |member| %>
+              <tr>
+                <td>
+                  <%= link_to member.id, edit_member_path(id: member.id), :class=>'no_border_link' %>
+                </td>
+                <td class="div_left"><%= member.name %></td>
+                <td class="div_left"><%= member.mail %></td>
+                <td class="div_left"><%= member.admin %></td>
+                <td class="div_left">
+                  <%= link_to controller.get_show_csv(member.id, true), ten_years_path(csv: controller.get_show_csv(member.id, true), member_id: member.id), :class=>'no_border_link' %>
+                </td>
+                <td class="div_left"><%= member.unsbscribe_date %></td>
+                <td class="div_left">
+                  <%= link_to "削除", [member], method: :delete,
+                    data: {confirm: "メンバー情報を削除します。よろしいですか?"}, :class=>'no_border_link'%>
+                </td>
+                <td class="div_center">
+                  <%= link_to "実行", password_reset_members_path(id: member.id),
+                    data: {confirm: "パスワードをリセットします。よろしいですか?"}, :class=>'no_border_link' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>会員情報がありません。</p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="div_center">
+    <div class="div_bold">■公開作品閲覧画面■</div><br/>
+    <div>皆さんの<span class="div_bold">新しい10年間</span></div>
+    <% if @members.present? %>
+      <table class="inline-block">
+        <tbody>
+          <% @members.each do |member| %>
+            <% if controller.get_show_csv(member.id, true) != "" && !member.admin %>
+              <tr>
+                <td class="div_left"><%= member.name %> <span class="font_9">さんの<span></td>
+                <td class="div_left">
+                  <%= link_to controller.get_show_csv(member.id, false), ten_years_path(csv: controller.get_show_csv(member.id, true), member_id: member.id), :class=>'no_border_link' %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>会員情報がありません。</p>
+    <% end %>
+  </div>
+
+
+</div>

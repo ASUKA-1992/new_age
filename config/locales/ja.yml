@@ -1,0 +1,21 @@
+ja:
+  activerecord:
+    models:
+      event: 出来事
+      member:
+
+    attributes:
+      event:
+        title: 見出し
+        detail: 詳細
+        population_change: 総人口増減
+      member:
+        name: ユーザー名
+        mail: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード(確認用)
+
+
+      errors:
+        messages:
+          not_image_file: 画像ファイルを選択してください

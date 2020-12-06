@@ -1,0 +1,268 @@
+<div class="body">
+  <div class="div_center">
+    <div class="div_bold">■初期人口画面■</div><br/>
+    <% if session[:member_admin] %>
+      <div>2011年1月1日時点の人口データです</div>
+      <div>
+        <% if @total_population.present? %>
+          <span class="side_margin">
+            <%= link_to "総人口リセット", @total_population, method: :delete,
+              data: {confirm: "【危険】性別・年齢別人口と居住地別人口も同時にリセットされます。よろしいですか?"}, :class=>'no_border_link' %>
+          </span>
+
+          <% if @age_and_genders.present? %>
+            <span class="side_margin">
+              <%= link_to "[編集]性別・年齢別人口", edit_age_path(id: @age_and_genders.id), :class=>'no_border_link' %>
+            </span>
+          <% else %>
+            <span class="side_margin">
+              <%= link_to "[登録]性別・年齢別人口", :new_age, :class=>'no_border_link' %>
+            </span>
+          <% end %>
+
+          <% if @prefectures.present? %>
+            <span class="side_margin">
+              <%= link_to "[編集]居住地別人口", edit_prefecture_path(id: @prefectures.id), :class=>'no_border_link' %>
+            </span>
+          <% else %>
+            <span class="side_margin">
+              <%= link_to "[登録]居住地別人口登録", :new_prefecture, :class=>'no_border_link' %>
+            </span>
+          <% end %>
+        <% end %>
+      </div><br/>
+    <% else %>
+      <div>2011年1月1日時点の人口データです。数値の修正はできません</div><br/>
+    <% end %>
+
+    <%# 総人口begin　%>
+    <div><span class="div_bold">総人口:</span>
+    <% if @total_population.present? %>
+      <span>
+        <%= @total_population.value.to_s(:delimited) %>
+      </span>人</div>
+    <% else %>
+      登録されていません</div>
+      <%= link_to "新規登録", :new_const, :class=>'no_border_link' %>
+    <% end %>
+    <br/>
+    <%# 総人口end　%>
+
+    <%# 男女年齢別begin　%>
+    <% if @age_and_genders.present? %>
+    <div><span class="div_bold">性別・年齢別人口</span></div>
+      <table class="table_main inline-block head_color">
+        <thead>
+          <tr>
+            <th class="td_w100">女性<span class="font_12"></span></th>
+            <th class="td_w125">出生年</th>
+            <th class="td_w100">男性<span class="font_12"></span></th>
+          </tr>
+        <tbody class="table_body">
+          <tr>
+            <td class="div_right"><%= @age_and_genders.F1910.to_s(:delimited) %></td>
+            <td class="">~1910</td>
+            <td class="div_right"><%= @age_and_genders.M1910.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="div_right"><%= @age_and_genders.F1920.to_s(:delimited) %></td>
+            <td class="">1920~1929</td>
+            <td class="div_right"><%= @age_and_genders.M1920.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="div_right"><%= @age_and_genders.F1930.to_s(:delimited) %></td>
+            <td class="">1930~1939</td>
+            <td class="div_right"><%= @age_and_genders.M1930.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="div_right"><%= @age_and_genders.F1940.to_s(:delimited) %></td>
+            <td class="">1940~1949</td>
+            <td class="div_right"><%= @age_and_genders.M1940.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="div_right"><%= @age_and_genders.F1950.to_s(:delimited) %></td>
+            <td class="">1950~1959</td>
+            <td class="div_right"><%= @age_and_genders.M1950.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="div_right"><%= @age_and_genders.F1960.to_s(:delimited) %></td>
+            <td class="">1960~1969</td>
+            <td class="div_right"><%= @age_and_genders.M1960.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="div_right"><%= @age_and_genders.F1970.to_s(:delimited) %></td>
+            <td class="">1970~1979</td>
+            <td class="div_right"><%= @age_and_genders.M1970.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="div_right"><%= @age_and_genders.F1980.to_s(:delimited) %></td>
+            <td class="">1980~1989</td>
+            <td class="div_right"><%= @age_and_genders.M1980.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="div_right"><%= @age_and_genders.F1990.to_s(:delimited) %></td>
+            <td class="">1990~1999</td>
+            <td class="div_right"><%= @age_and_genders.M1990.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="div_right"><%= @age_and_genders.F2000.to_s(:delimited) %></td>
+            <td class="">2000~2009</td>
+            <td class="div_right"><%= @age_and_genders.M2000.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="div_right"><%= @age_and_genders.F2010.to_s(:delimited) %></td>
+            <td class="">2010~</td>
+            <td class="div_right"><%= @age_and_genders.M2010.to_s(:delimited) %></td>
+          </tr>
+      </table>
+    <% end %>
+    <br/>
+    <%# 男女年齢別end　%>
+
+    <%# 居住地別begin　%>
+    <% if @prefectures.present? %>
+      <div><span class="div_bold">居住地別人口</span></div>
+      <table class="table_main inline-block head_color">
+        <thead>
+          <tr>
+            <th colspan="2">北海道・東北</th>
+            <th colspan="2">関東</th>
+            <th colspan="2">中部</th>
+            <th colspan="2">近畿</th>
+            <th colspan="2">中国・四国</th>
+            <th colspan="2">九州・沖縄・海外</th>
+          </tr>
+        <tbody class="table_body">
+          <tr>
+            <td class="td_w75">北海道</td>
+            <td class="td_w100 div_right"><%= @prefectures.Hokkaido.to_s(:delimited) %></td>
+            <td class="td_w75">茨城県</td>
+            <td class="td_w100 div_right"><%= @prefectures.Ibaraki.to_s(:delimited) %></td>
+            <td class="td_w75">新潟県</td>
+            <td class="td_w100 div_right"><%= @prefectures.Niigata.to_s(:delimited) %></td>
+            <td class="td_w75">三重県</td>
+            <td class="td_w100 div_right"><%= @prefectures.Mie.to_s(:delimited) %></td>
+            <td class="td_w75">鳥取県</td>
+            <td class="td_w100 div_right"><%= @prefectures.Tottori.to_s(:delimited) %></td>
+            <td class="td_w75">福岡県</td>
+            <td class="td_w100 div_right"><%= @prefectures.Fukuoka.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="">青森県</td>
+            <td class="div_right"><%= @prefectures.Aomori.to_s(:delimited) %></td>
+            <td class="">栃木県</td>
+            <td class="div_right"><%= @prefectures.Tochigi.to_s(:delimited) %></td>
+            <td class="">富山県</td>
+            <td class="div_right"><%= @prefectures.Toyama.to_s(:delimited) %></td>
+            <td class="">滋賀県</td>
+            <td class="div_right"><%= @prefectures.Shiga.to_s(:delimited) %></td>
+            <td class="">島根県</td>
+            <td class="div_right"><%= @prefectures.Shimane.to_s(:delimited) %></td>
+            <td class="">佐賀県</td>
+            <td class="div_right"><%= @prefectures.Saga.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="">岩手県</td>
+            <td class="div_right"><%= @prefectures.Iwate.to_s(:delimited) %></td>
+            <td class="">群馬県</td>
+            <td class="div_right"><%= @prefectures.Gunma.to_s(:delimited) %></td>
+            <td class="">石川県</td>
+            <td class="div_right"><%= @prefectures.Ishikawa.to_s(:delimited) %></td>
+            <td class="">京都府</td>
+            <td class="div_right"><%= @prefectures.Kyoto.to_s(:delimited) %></td>
+            <td class="">岡山県</td>
+            <td class="div_right"><%= @prefectures.Okayama.to_s(:delimited) %></td>
+            <td class="">長崎県</td>
+            <td class="div_right"><%= @prefectures.Nagasaki.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="">秋田県</td>
+            <td class="div_right"><%= @prefectures.Akita.to_s(:delimited) %></td>
+            <td class="">埼玉県</td>
+            <td class="div_right"><%= @prefectures.Saitama.to_s(:delimited) %></td>
+            <td class="">福井県</td>
+            <td class="div_right"><%= @prefectures.Fukui.to_s(:delimited) %></td>
+            <td class="">大阪府</td>
+            <td class="div_right"><%= @prefectures.Osaka.to_s(:delimited) %></td>
+            <td class="">広島県</td>
+            <td class="div_right"><%= @prefectures.Hiroshima.to_s(:delimited) %></td>
+            <td class="">熊本県</td>
+            <td class="div_right"><%= @prefectures.Kumamoto.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="">宮城県</td>
+            <td class="div_right"><%= @prefectures.Miyagi.to_s(:delimited) %></td>
+            <td class="">千葉県</td>
+            <td class="div_right"><%= @prefectures.Chiba.to_s(:delimited) %></td>
+            <td class="">山梨県</td>
+            <td class="div_right"><%= @prefectures.Yamanashi.to_s(:delimited) %></td>
+            <td class="">兵庫県</td>
+            <td class="div_right"><%= @prefectures.Hyogo.to_s(:delimited) %></td>
+            <td class="">山口県</td>
+            <td class="div_right"><%= @prefectures.Yamaguchi.to_s(:delimited) %></td>
+            <td class="">大分県</td>
+            <td class="div_right"><%= @prefectures.Oita.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="">山形県</td>
+            <td class="div_right"><%= @prefectures.Yamagata.to_s(:delimited) %></td>
+            <td class="">東京都</td>
+            <td class="div_right"><%= @prefectures.Tokyo.to_s(:delimited) %></td>
+            <td class="">長野県</td>
+            <td class="div_right"><%= @prefectures.Nagano.to_s(:delimited) %></td>
+            <td class="">奈良県</td>
+            <td class="div_right"><%= @prefectures.Nara.to_s(:delimited) %></td>
+            <td class="">徳島県</td>
+            <td class="div_right"><%= @prefectures.Tokushima.to_s(:delimited) %></td>
+            <td class="">宮崎県</td>
+            <td class="div_right"><%= @prefectures.Miyazaki.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="">福島県</td>
+            <td class="div_right"><%= @prefectures.Fukushima.to_s(:delimited) %></td>
+            <td class="">神奈川県</td>
+            <td class="div_right"><%= @prefectures.Kanagawa.to_s(:delimited) %></td>
+            <td class="">岐阜県</td>
+            <td class="div_right"><%= @prefectures.Gifu.to_s(:delimited) %></td>
+            <td class="">和歌山県</td>
+            <td class="div_right"><%= @prefectures.Wakayama.to_s(:delimited) %></td>
+            <td class="">香川県</td>
+            <td class="div_right"><%= @prefectures.Kagawa.to_s(:delimited) %></td>
+            <td class="">鹿児島</td>
+            <td class="div_right"><%= @prefectures.Kagoshima.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="">静岡県</td>
+            <td class="div_right"><%= @prefectures.Shizuoka.to_s(:delimited) %></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="">愛媛県</td>
+            <td class="div_right"><%= @prefectures.Ehime.to_s(:delimited) %></td>
+            <td class="">沖縄県</td>
+            <td class="div_right"><%= @prefectures.Okinawa.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="">愛知県</td>
+            <td class="div_right"><%= @prefectures.Aichi.to_s(:delimited) %></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="">高知県</td>
+            <td class="div_right"><%= @prefectures.Kochi.to_s(:delimited) %></td>
+            <td class="">海外</td>
+            <td class="div_right"><%= @prefectures.Others.to_s(:delimited) %></td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+    <%# 居住地別end　%>
+    <div>初期人口は<a class="no_border_link no_margin_important" target="_blank"  href="https://www.e-stat.go.jp/">e-stat</a>様の人口推計をベースに設定しました。</div>
+  </div>
+</div>

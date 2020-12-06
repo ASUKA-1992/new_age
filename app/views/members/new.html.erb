@@ -1,0 +1,38 @@
+<br/>
+<div class="body_narrow">
+  <div class="div_center">
+  <div class="top">
+    <%= image_tag "logo_normal.png", size: "280x100", alt: "タイトル" %>
+  </div>
+  <div class="font_15">会員登録</div>
+  <%= render "shared/errors", obj: @member %>
+    <%= form_for @member do |form| %>
+      <table class="inline-block">
+        <tr>
+          <th class="div_right">ユーザー名<br/>
+            <span class="font_9 font_wight_lighter">4~15文字</span></th>
+          <td><%= form.text_field :name, size:50, maxlength:15 %></td>
+        </tr>
+        <tr>
+          <th class="div_right">メールアドレス</th>
+          <td><%= form.text_field :mail, size:50 %></td>
+        </tr>
+        <tr>
+          <th class="div_right">パスワード<br/>
+          <span class="font_9 font_wight_lighter">半角英数6~15文字</span></th>
+          <td><%= form.password_field :password, size:50 %></td>
+        </tr>
+        <tr>
+          <th class="div_right">パスワード確認</th>
+          <td><%= form.password_field :password_confirmation, size:50 %></td>
+        </tr>
+      </table>
+      <div><%= form.submit value="確定" %></div>
+    <% end %>
+    <br/>
+    <div class="font_12">
+      ・ユーザー名は本名ではなく、ニックネーム等を設定してください。<br/>
+      ・メールアドレスはログインのみで必要となります。架空のアドレスでも問題ありません。
+    </div>
+  </div>
+</div>

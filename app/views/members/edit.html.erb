@@ -1,0 +1,44 @@
+<br/>
+<div class="body_narrow">
+  <div class="div_center">
+  <div class="font_15">会員情報更新</div>
+  <%= render "shared/errors", obj: @member %>
+  <%= form_for @member do |form| %>
+    <table class="table_main inline-block">
+      <tr>
+        <th>ユーザー名
+          <p class="no_margin font_12">3~15文字</p></th>
+        <td><%= form.text_field :name, size:50, maxlength:15 %></td>
+      </tr>
+      <tr>
+        <th>メールアドレス</th>
+        <td><%= form.text_field :mail, size:50 %></td>
+      </tr>
+      <tr>
+        <th>パスワード</th>
+        <td><%= form.password_field :password, size:50 %></td>
+      </tr>
+      <tr>
+        <th>パスワード確認</th>
+        <td><%= form.password_field :password_confirmation, size:50 %></td>
+      </tr>
+      <% if session[:member_admin] %>
+        <tr>
+          <th>管理者</th>
+          <td class="div_left">
+            <%= form.check_box :admin, {} %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    <div><%= form.submit value="確定" %></div>
+  <% end %>
+  <br/>
+  <% if !session[:member_admin] %>
+    <div class="font_15">退会はこちら</div>
+      <%= form_tag :unsbscribe_members, method: :get do %>
+        <%= submit_tag "退会", data: {confirm: "このウェブサイトから退会します。よろしいですか?"} %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

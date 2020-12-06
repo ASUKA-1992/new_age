@@ -1,0 +1,264 @@
+/*■■■■■■全画面共通系■■■■■■*/
+.body{
+  margin: 0 auto;
+  position: relative;
+  font-size: 13px;
+}
+
+.body_narrow{
+  width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  font-size: 13px;
+}
+
+.body_narrow_manual{
+  width: 750px;
+  margin: 0 auto;
+  position: relative;
+  font-size: 13px;
+}
+
+.div_center{ text-align: center; }
+.div_right{ text-align: right; }
+.div_left{ text-align: left; }
+.div_bold{ font-weight: bold; }
+.div_normal{ font-weight: normal; }
+.div_top{ vertical-align: top; }
+.no_margin{ margin: 0 0 0 0 }
+.no_margin_important{ margin: 0 0 0 0 !important }
+.right_margin{ margin-right: 20px}
+.left_margin{ margin-left: 20px}
+.left_margin_10px{ margin-left: 10px}
+.side_margin{ margin: 0 20px 0 20px }
+.top_bottom_margin{ margin: 20px 0 20px 0 }
+.bottom_margin{ margin: 0 0 5px 0 }
+.left_bottom_margin{ margin: 0 0 5px 20px }
+.div_flex{display: flex}
+.div_flex_center{justify-content: center}
+.div_inline_flex{display: inline-flex}
+.inline-block{display: inline-block}
+.div_display_none{display: none}
+.div_cursor_hand{cursor:pointer}
+.div_cursor_default{cursor:default}
+.div_width_100per{width: 100%}
+.div_width_50per{width: 50%}
+.div_height_5px{height: 5px}
+.font_wight_lighter{font-weight: lighter} /*細字*/
+
+/*下線なしリンク*/
+.no_border_link{
+  text-decoration: none;
+  color: dimgray;
+}
+
+/*下線なしリンクボーダーリンク*/
+.no_border_link_no_margin{
+  text-decoration: none;
+  color: dimgray;
+  margin: 0;
+}
+
+/*人口入力・右寄せinput*/
+.age_new_input{
+  text-align: right;
+  width: 70px;
+}
+
+/*テーブルセル内で改行させない*/
+.shortcut {
+    width: 200px; /* 要素の横幅を指定 */
+    white-space: nowrap; /* 横幅のMAXに達しても改行しない */
+    overflow: hidden; /* ハミ出した部分を隠す */
+    text-overflow: ellipsis; /* 「…」と省略 */
+    -webkit-text-overflow: ellipsis; /* Safari */
+    -o-text-overflow: ellipsis; /* Opera */
+}
+
+/* テキストエリア */
+textarea{
+  font-size: 14px;
+  resize: none;
+}
+
+/*フォントサイズ9px*/
+.font_9{
+  font-size: 9px;
+}
+
+/*フォントサイズ10px*/
+.font_10{
+  font-size: 10px;
+}
+
+/*フォントサイズ12px*/
+.font_12{
+  font-size: 12px;
+}
+
+/*フォントサイズ15px*/
+.font_15{
+  font-size: 15px;
+}
+
+/*フォントサイズ17px*/
+.font_17{
+  font-size: 17px;
+}
+
+/*フォントサイズ20px*/
+.font_20{
+  font-size: 20px;
+}
+
+/*readonlyのinput*/
+.input_readonly{
+  width: 80px;
+  text-align: right;
+}
+
+/*input幅200px*/
+.input_width500{
+  width: 500px;
+}
+
+/*inputがinputっぽく見えないようにする*/
+.input_white{
+  text-align: right;
+  border: 0px none;
+  width: 80px;
+}
+
+/*マージンのないチェックボックス*/
+.cal_checkbox{
+  margin: 0;
+}
+
+/*ラジオボタンカスタマイズ*/
+input[type=radio].radio {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    border-radius: 50%;
+}
+input[type=radio]:before {
+    content: "";
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin: 2px;
+    transform: scale(0);
+}
+input[type=radio]:checked:before {
+    transform: scale(1);
+}
+
+/*色つきラジオボタン*/
+/*特になし*/
+input[type=radio].radio_0:checked:before {
+    background: dimgray;
+}
+input[type=radio].radio_0 {
+    border: 1px solid dimgray;
+}
+/*一部汚染*/
+input[type=radio].radio_p1:checked:before {
+    background: #da70d6;
+}
+input[type=radio].radio_p1 {
+    border: 1px solid #da70d6;
+}
+/*全域汚染*/
+input[type=radio].radio_p2:checked:before {
+    background: #8a2be2;
+}
+input[type=radio].radio_p2 {
+    border: 1px solid #8a2be2;
+}
+/*一部沈没*/
+input[type=radio].radio_1:checked:before {
+    background: #6495ed;
+}
+input[type=radio].radio_1 {
+    border: 1px solid #6495ed;
+}
+/*全域沈没*/
+input[type=radio].radio_2:checked:before {
+    background: #191970;
+}
+input[type=radio].radio_2 {
+    border: 1px solid #191970;
+}
+
+/*色解説の色*/
+.color_1{color: #ffd700}
+.color_2{color: #ff0000}
+.color_3{color: #6495ed}
+.color_5{color: #da70d6}
+.color_6{color: #8a2be2}
+.color_7{color: #191970}
+
+/*■■■■■■表テーブル系■■■■■■*/
+.table_main
+, .table_main th
+, .table_main td{
+  border: solid 1px lightgray;
+  border-collapse: collapse;
+  border: 1px #c0c0c0 solid;
+}
+
+.table_color_odd tr:nth-child(even) {
+  background: #f0f8ff;
+}
+
+.table_type2 th{
+  text-align: left;
+  height: 30px;
+}
+
+.td_center{ text-align: center;}
+
+.td_w25{ width: 25px;}
+.td_w50{ width: 50px;}
+.td_w75{ width: 75px;}
+.td_w100{ width: 100px;}
+.td_w125{ width: 125px;}
+.td_w150{ width: 150px;}
+.td_w200{ width: 200px;}
+.td_w250{ width: 250px;}
+.td_w400{ width: 400px;}
+.td_w500{ width: 500px;}
+
+.head_color th{
+  background-color: #beccea;
+}
+
+/*グレーアウト*/
+.gray_out{
+  background-color: #808080 !important;
+}
+/*オレンジ網掛け*/
+.alert_color{
+  background-color: #ffd700;
+}
+/*赤文字*/
+.alert{
+  color: red;
+  font-size: 13px;
+}
+
+/*スマホの時以外は非表示*/
+.sp_brake{
+  display: none;
+}
+
+/*スマホの時*/
+@media screen and (max-width:700px) {
+  /*表示*/
+  .sp_brake{
+    display: block;
+  }
+}

@@ -1,0 +1,320 @@
+<div class="body">
+  <div class="div_center">
+    <div class="div_bold">■出来事情報画面■</div><br/>
+    <div>
+      <% if @admin_flg %>
+        管理者専用 メンバーID: <%= @event.member_id %>
+        <br/>
+      <% end %>
+
+      <div>
+        <%= link_to "前へ", @event_before, :class=>'no_border_link side_margin' %>
+        <%= link_to "次へ", @event_next, :class=>'no_border_link side_margin' %>
+      </div>
+
+      <% if @event.event_type == 0 %>
+        <span class="side_margin">
+          <%= link_to "編集", :edit_event, :class=>'no_border_link' %>
+        </span>
+        <% if @event_age.present? %>
+          <span class="side_margin">
+            <%= link_to "[編集]性別・年齢別人口増減", edit_event_age_path(event_id: @event.id), :class=>'no_border_link' %>
+          </span>
+        <% else %>
+          <span class="side_margin">
+            <%= link_to "[登録]性別・年齢別人口増減", new_event_age_path(event_id: @event.id), :class=>'no_border_link' %>
+          </span>
+        <% end %>
+
+      <% elsif @event.event_type == 1 %>
+        <% if @admin_flg %>
+          <%= link_to "編集", :edit_event, :class=>'no_border_link' %>
+        <% end %>
+        <% if @event_age.present? %>
+          <span class="side_margin">
+            <%= link_to "[編集]性別・年齢別年間人口増減", edit_event_year_age_path(event_id: @event.id), :class=>'no_border_link' %>
+          </span>
+        <% else %>
+          <span class="side_margin">
+            <%= link_to "[登録]性別・年齢別年間人口増減", new_event_year_age_path(event_id: @event.id), :class=>'no_border_link' %>
+          </span>
+        <% end %>
+      <% end %>
+
+      <% if @event_prefecture.present? %>
+        <span class="side_margin">
+          <%= link_to "[編集]居住地別人口増減・移動", edit_event_prefecture_path(event_id: @event.id), :class=>'no_border_link' %>
+        </span>
+      <% else %>
+        <span class="side_margin">
+          <%= link_to "[登録]居住地別人口増減・移動", new_event_prefecture_path(event_id: @event.id), :class=>'no_border_link' %>
+        </span>
+      <% end %>
+
+      <% if @admin_flg || (@event.event_type == 0 && controller.check_first_data(@event) ) %>
+        <span class="side_margin">
+          <%= link_to "削除", "#{@event.id}", method: :delete,
+            data: {confirm: "性別・年齢別人口増減と居住地別人口増減・移動も同時に削除されます。よろしいですか?"}, :class=>'no_border_link'%>
+        </span>
+      <% end %>
+
+      <% if !@admin_flg && @event.event_type == 1 %>
+        <span class="side_margin">
+          <%= link_to "初期値復元", restor_default_events_url(id: @event.id ,title: @event.title),
+            data: {confirm: "ご自身で入力したデータが失われます。よろしいですか?"}, :class=>'no_border_link'%>
+        </span>
+      <% end %>
+
+    </div>
+
+    <div class="font_20"><%= @event.title %></div>
+    <table id="age_new_table" class="table_main inline-block">
+      <tr>
+        <td colspan="2">
+          <span class="div_bold">日付</span>:<%= @event.date %> |
+          <span class="div_bold">総人口増減</span>:<%= @event.population_change %> |
+          <span class="div_bold">フィクション</span>:<%= controller.get_flg_value(@event.is_fake) %> |
+          <span class="div_bold">有効</span>:<%= controller.get_flg_value(@event.is_active) %>
+        </td>
+      </tr>
+      <tr>
+        <th class="">詳細</th>
+        <td class="td_w500 div_left"><%= simple_format(@event.detail) %></td>
+      </tr>
+      <tr>
+        <th class="">一部汚染都道府県</th>
+        <td class="div_left"><%= @half_pollution %></td>
+      </tr>
+      <tr>
+        <th class="">全域汚染都道府県</th>
+        <td class="div_left"><%= @pollution %></td>
+      </tr>
+      <tr>
+        <th class="">一部沈没都道府県</th>
+        <td class="div_left"><%= @half_prefectures %></td>
+      </tr>
+      <tr>
+        <th class="">全域沈没都道府県</th>
+        <td class="div_left"><%= @prefectures %></td>
+      </tr>
+    </table>
+
+    <%# 男女年齢別begin　%>
+    <% if @event_age.present? %>
+    <div><span class="div_bold">性別・年齢別人口増減</span></div>
+      <table class="table_main inline-block head_color">
+        <thead>
+          <tr>
+            <th class="td_w100">女性<span class="font_12"></span></th>
+            <th class="td_w125">出生年</th>
+            <th class="td_w100">男性<span class="font_12"></span></th>
+          </tr>
+        <tbody class="table_body">
+          <tr>
+            <td class="div_right"><%= @event_age.F1910.to_s(:delimited) %></td>
+            <td class="">～1910</td>
+            <td class="div_right"><%= @event_age.M1910.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="div_right"><%= @event_age.F1920.to_s(:delimited) %></td>
+            <td class="">1920~1929</td>
+            <td class="div_right"><%= @event_age.M1920.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="div_right"><%= @event_age.F1930.to_s(:delimited) %></td>
+            <td class="">1930~1939</td>
+            <td class="div_right"><%= @event_age.M1930.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="div_right"><%= @event_age.F1940.to_s(:delimited) %></td>
+            <td class="">1940~1949</td>
+            <td class="div_right"><%= @event_age.M1940.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="div_right"><%= @event_age.F1950.to_s(:delimited) %></td>
+            <td class="">1950~1959</td>
+            <td class="div_right"><%= @event_age.M1950.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="div_right"><%= @event_age.F1960.to_s(:delimited) %></td>
+            <td class="">1960~1969</td>
+            <td class="div_right"><%= @event_age.M1960.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="div_right"><%= @event_age.F1970.to_s(:delimited) %></td>
+            <td class="">1970~1979</td>
+            <td class="div_right"><%= @event_age.M1970.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="div_right"><%= @event_age.F1980.to_s(:delimited) %></td>
+            <td class="">1980~1989</td>
+            <td class="div_right"><%= @event_age.M1980.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="div_right"><%= @event_age.F1990.to_s(:delimited) %></td>
+            <td class="">1990~1999</td>
+            <td class="div_right"><%= @event_age.M1990.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="div_right"><%= @event_age.F2000.to_s(:delimited) %></td>
+            <td class="">2000~2009</td>
+            <td class="div_right"><%= @event_age.M2000.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="div_right"><%= @event_age.F2010.to_s(:delimited) %></td>
+            <td class="">2010~</td>
+            <td class="div_right"><%= @event_age.M2010.to_s(:delimited) %></td>
+          </tr>
+      </table>
+    <% end %>
+    <br/>
+    <%# 男女年齢別end　%>
+
+    <%# 居住地別begin　%>
+    <% if @event_prefecture.present? %>
+      <div><span class="div_bold">居住地別人口増減・移動</span></div>
+      <table class="table_main inline-block head_color">
+        <thead>
+          <tr>
+            <th colspan="2">北海道・東北</th>
+            <th colspan="2">関東</th>
+            <th colspan="2">中部</th>
+            <th colspan="2">近畿</th>
+            <th colspan="2">中国・四国</th>
+            <th colspan="2">九州・沖縄</th>
+          </tr>
+        <tbody class="table_body">
+          <tr>
+            <td class="td_w75">北海道</td>
+            <td class="td_w100 div_right"><%= @event_prefecture.Hokkaido.to_s(:delimited) %></td>
+            <td class="td_w75">茨城県</td>
+            <td class="td_w100 div_right"><%= @event_prefecture.Ibaraki.to_s(:delimited) %></td>
+            <td class="td_w75">新潟県</td>
+            <td class="td_w100 div_right"><%= @event_prefecture.Niigata.to_s(:delimited) %></td>
+            <td class="td_w75">三重県</td>
+            <td class="td_w100 div_right"><%= @event_prefecture.Mie.to_s(:delimited) %></td>
+            <td class="td_w75">鳥取県</td>
+            <td class="td_w100 div_right"><%= @event_prefecture.Tottori.to_s(:delimited) %></td>
+            <td class="td_w75">福岡県</td>
+            <td class="td_w100 div_right"><%= @event_prefecture.Fukuoka.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="">青森県</td>
+            <td class="div_right"><%= @event_prefecture.Aomori.to_s(:delimited) %></td>
+            <td class="">栃木県</td>
+            <td class="div_right"><%= @event_prefecture.Tochigi.to_s(:delimited) %></td>
+            <td class="">富山県</td>
+            <td class="div_right"><%= @event_prefecture.Toyama.to_s(:delimited) %></td>
+            <td class="">滋賀県</td>
+            <td class="div_right"><%= @event_prefecture.Shiga.to_s(:delimited) %></td>
+            <td class="">島根県</td>
+            <td class="div_right"><%= @event_prefecture.Shimane.to_s(:delimited) %></td>
+            <td class="">佐賀県</td>
+            <td class="div_right"><%= @event_prefecture.Saga.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="">岩手県</td>
+            <td class="div_right"><%= @event_prefecture.Iwate.to_s(:delimited) %></td>
+            <td class="">群馬県</td>
+            <td class="div_right"><%= @event_prefecture.Gunma.to_s(:delimited) %></td>
+            <td class="">石川県</td>
+            <td class="div_right"><%= @event_prefecture.Ishikawa.to_s(:delimited) %></td>
+            <td class="">京都府</td>
+            <td class="div_right"><%= @event_prefecture.Kyoto.to_s(:delimited) %></td>
+            <td class="">岡山県</td>
+            <td class="div_right"><%= @event_prefecture.Okayama.to_s(:delimited) %></td>
+            <td class="">長崎県</td>
+            <td class="div_right"><%= @event_prefecture.Nagasaki.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="">秋田県</td>
+            <td class="div_right"><%= @event_prefecture.Akita.to_s(:delimited) %></td>
+            <td class="">埼玉県</td>
+            <td class="div_right"><%= @event_prefecture.Saitama.to_s(:delimited) %></td>
+            <td class="">福井県</td>
+            <td class="div_right"><%= @event_prefecture.Fukui.to_s(:delimited) %></td>
+            <td class="">大阪府</td>
+            <td class="div_right"><%= @event_prefecture.Osaka.to_s(:delimited) %></td>
+            <td class="">広島県</td>
+            <td class="div_right"><%= @event_prefecture.Hiroshima.to_s(:delimited) %></td>
+            <td class="">熊本県</td>
+            <td class="div_right"><%= @event_prefecture.Kumamoto.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="">宮城県</td>
+            <td class="div_right"><%= @event_prefecture.Miyagi.to_s(:delimited) %></td>
+            <td class="">千葉県</td>
+            <td class="div_right"><%= @event_prefecture.Chiba.to_s(:delimited) %></td>
+            <td class="">山梨県</td>
+            <td class="div_right"><%= @event_prefecture.Yamanashi.to_s(:delimited) %></td>
+            <td class="">兵庫県</td>
+            <td class="div_right"><%= @event_prefecture.Hyogo.to_s(:delimited) %></td>
+            <td class="">山口県</td>
+            <td class="div_right"><%= @event_prefecture.Yamaguchi.to_s(:delimited) %></td>
+            <td class="">大分県</td>
+            <td class="div_right"><%= @event_prefecture.Oita.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="">山形県</td>
+            <td class="div_right"><%= @event_prefecture.Yamagata.to_s(:delimited) %></td>
+            <td class="">東京都</td>
+            <td class="div_right"><%= @event_prefecture.Tokyo.to_s(:delimited) %></td>
+            <td class="">長野県</td>
+            <td class="div_right"><%= @event_prefecture.Nagano.to_s(:delimited) %></td>
+            <td class="">奈良県</td>
+            <td class="div_right"><%= @event_prefecture.Nara.to_s(:delimited) %></td>
+            <td class="">徳島県</td>
+            <td class="div_right"><%= @event_prefecture.Tokushima.to_s(:delimited) %></td>
+            <td class="">宮崎県</td>
+            <td class="div_right"><%= @event_prefecture.Miyazaki.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="">福島県</td>
+            <td class="div_right"><%= @event_prefecture.Fukushima.to_s(:delimited) %></td>
+            <td class="">神奈川県</td>
+            <td class="div_right"><%= @event_prefecture.Kanagawa.to_s(:delimited) %></td>
+            <td class="">岐阜県</td>
+            <td class="div_right"><%= @event_prefecture.Gifu.to_s(:delimited) %></td>
+            <td class="">和歌山県</td>
+            <td class="div_right"><%= @event_prefecture.Wakayama.to_s(:delimited) %></td>
+            <td class="">香川県</td>
+            <td class="div_right"><%= @event_prefecture.Kagawa.to_s(:delimited) %></td>
+            <td class="">鹿児島</td>
+            <td class="div_right"><%= @event_prefecture.Kagoshima.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="">静岡県</td>
+            <td class="div_right"><%= @event_prefecture.Shizuoka.to_s(:delimited) %></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="">愛媛県</td>
+            <td class="div_right"><%= @event_prefecture.Ehime.to_s(:delimited) %></td>
+            <td class="">沖縄県</td>
+            <td class="div_right"><%= @event_prefecture.Okinawa.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="">愛知県</td>
+            <td class="div_right"><%= @event_prefecture.Aichi.to_s(:delimited) %></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="">高知県</td>
+            <td class="div_right"><%= @event_prefecture.Kochi.to_s(:delimited) %></td>
+            <td class="">海外</td>
+            <td class="div_right"><%= @event_prefecture.Others.to_s(:delimited) %></td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+    <%# 居住地別end　%>
+
+  </div>
+
+</div>
